@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
-import { FaArrowRight, FaBriefcase, FaCode, FaGithub, FaLaptopCode, FaRocket, FaUsers } from 'react-icons/fa6';
+import { FaArrowRight, FaBriefcase, FaCode, FaLinkedin, FaGithub, FaLaptopCode, FaXTwitter, FaRocket, FaUsers } from 'react-icons/fa6';
 import {
   SiExpress,
   SiMongodb,
@@ -15,6 +15,36 @@ import {
 import AIChar from '../assets/AIChar.png';
 
 const thinBorder = 'border border-gray-200/60';
+
+const socials = [
+  {
+    name: 'LinkedIn',
+    handle: '@aayushbarik',
+    href: 'https://www.linkedin.com/in/aayush-barik-49882b247/',
+    icon: FaLinkedin,
+    color: 'text-slate-900',
+    border: 'border-gray-300',
+    bg: 'bg-gray-50',
+  },
+  {
+    name: 'GitHub',
+    handle: '@aayushbarik',
+    href: 'https://github.com/AayushBarik07',
+    icon: FaGithub,
+    color: 'text-slate-800',
+    border: 'border-gray-300',
+    bg: 'bg-gray-50',
+  },
+  {
+    name: 'Twitter / X',
+    handle: '@aayushbarik',
+    href: 'https://x.com/aayush_barik',
+    icon: FaXTwitter,
+    color: 'text-slate-900',
+    border: 'border-gray-300',
+    bg: 'bg-gray-50',
+  },
+];
 
 const stats = [
   { label: 'Projects Completed', value: 10, suffix: '+' },
@@ -236,7 +266,7 @@ const AboutMe = () => {
         <div className="grid gap-4 lg:grid-cols-[300px_minmax(0,1.12fr)_300px] lg:items-start mt-10">
 
           {/* LEFT ASIDE — scrolls normally */}
-          <aside id="skills" className="order-2 space-y-4 lg:order-1 lg:justify-self-start lg:ml-[-0.75rem] lg:w-full lg:max-w-[320px] scroll-mt-24">
+          <aside id="skills" className="order-2 space-y-4 lg:order-1 lg:justify-self-start lg:-ml-3 lg:w-full lg:max-w-[320px] scroll-mt-24">
             <div className="relative shadow-sm p-3.5 backdrop-blur">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900">My Stack</h2>
@@ -335,23 +365,60 @@ const AboutMe = () => {
           </main>
 
           {/* RIGHT ASIDE — scrolls normally */}
-          <aside className="order-3 space-y-4 lg:order-3 lg:justify-self-end lg:mr-[-1rem] lg:w-full lg:max-w-[320px]">
-            <div className="relative p-3.5 shadow-sm backdrop-blur">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900">My Experience</h2>
-                <FaBriefcase className="h-4 w-4 text-cyan-500" />
-              </div>
-              <div className="space-y-3">
-                {experiences.map((experience, index) => (
-                  <ExperienceCard
-                    key={`${experience.company}-${experience.year}`}
-                    item={experience}
-                    isLast={index === experiences.length - 1}
-                  />
-                ))}
-              </div>
+          {/* RIGHT ASIDE — scrolls normally */}
+<aside className="order-3 space-y-4 lg:order-3 lg:justify-self-end lg:mr-[-1rem] lg:w-full lg:max-w-[320px]">
+
+  {/* Experience — unchanged */}
+  <div className="relative p-3.5 shadow-sm backdrop-blur">
+    <div className="mb-4 flex items-center justify-between gap-3">
+      <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900">My Experience</h2>
+      <FaBriefcase className="h-4 w-4 text-cyan-500" />
+    </div>
+    <div className="space-y-3">
+      {experiences.map((experience, index) => (
+        <ExperienceCard
+          key={`${experience.company}-${experience.year}`}
+          item={experience}
+          isLast={index === experiences.length - 1}
+        />
+      ))}
+    </div>
+  </div>
+
+  {/* ✅ NEW — Social Media section, same card style */}
+  <div className="relative p-3.5 shadow-sm backdrop-blur">
+    <div className="mb-4 flex items-center justify-between gap-3">
+      <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900">Find Me On</h2>
+      <FaUsers className="h-4 w-4 text-cyan-500" />
+    </div>
+    <div className="space-y-3">
+      {socials.map((social) => {
+        const SocialIcon = social.icon;
+        return (
+          <motion.a
+            key={social.name}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.03, y: -2 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            className={`flex items-center gap-3 rounded-2xl ${thinBorder} bg-white p-4 shadow-sm transition-all duration-300 hover:border-cyan-300/70`}
+          >
+            <div className={`rounded-xl border ${social.border} ${social.bg} p-2 ${social.color}`}>
+              <SocialIcon className="h-4 w-4" />
             </div>
-          </aside>
+            <div>
+              <p className="text-sm font-semibold text-slate-900">{social.name}</p>
+              <p className="text-xs text-slate-500">{social.handle}</p>
+            </div>
+            <FaArrowRight className="ml-auto h-3 w-3 text-slate-300" />
+          </motion.a>
+        );
+      })}
+    </div>
+  </div>
+
+</aside>
 
         </div>
       </div>

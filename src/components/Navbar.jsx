@@ -7,7 +7,7 @@ export default function Navbar() {
   
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const links = ['Home', 'About', 'Projects', 'Skills', 'Blogs', 'Resume/CV'];
+  const links = ['Home', 'About', 'Projects', 'Blogs', 'Resume/CV'];
 
   const sectionMap = {
     Home: 'home',
@@ -66,7 +66,7 @@ export default function Navbar() {
 
       {/* Contact button */}
       <div className="hidden md:flex relative items-center cursor-pointer">
-        <button
+        <a href="#contact"
           onClick={() => setActive('Contact')}
           className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold transition-shadow duration-150 ${
             active === 'Contact'
@@ -74,8 +74,8 @@ export default function Navbar() {
               : 'bg-white text-black hover:bg-black hover:text-white hover:shadow-md'
           }`}
         >
-          Contact
-        </button>
+          Let's Talk
+        </a>
       </div>
 
       <button
@@ -124,7 +124,7 @@ export default function Navbar() {
               menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
             }`}
           >
-            Contact
+            Let's Talk
           </button>
         </div>
       </div>
