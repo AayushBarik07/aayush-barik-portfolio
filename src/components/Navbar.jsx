@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import AIChar_2 from '../assets/AIChar_2.png';
 import resumePdf from '../assets/Aayush Barik Resume.pdf.pdf';
 
 export default function Navbar() {
@@ -36,9 +37,27 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-3 left-1/2 z-50 transform -translate-x-1/2 w-[min(94%,900px)] max-w-2xl bg-white/95 backdrop-blur rounded-full shadow-sm px-4 py-2 flex items-center border border-gray-300 dark:border-gray/100">
-      {/* Avatar (placeholder image with initials fallback) */}
-      <div className="flex items-center justify-center w-11 h-11 rounded-full bg-gray-100 ring-1 ring-gray-200 mr-3 sm:mr-4 shrink-0 cursor-pointer">
-        <span className="text-sm font-medium text-gray-700">AB</span>
+      {/* Avatar with flip effect on hover */}
+      <div className="relative w-11 h-11 mr-3 sm:mr-4 shrink-0 cursor-pointer [perspective:600px] group">
+        
+        {/* Inner flip container */}
+        <div className="relative w-full h-full transition-transform duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          
+          {/* FRONT — AB initials */}
+          <div className="absolute inset-0 flex items-center justify-center rounded-full bg-gray-100 ring-1 ring-gray-200 [backface-visibility:hidden]">
+            <span className="text-sm font-medium text-gray-700">AB</span>
+          </div>
+
+          {/* BACK — AI Character image */}
+          <div className="absolute inset-0 rounded-full overflow-hidden ring-1 ring-gray-200 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+            <img
+              src={AIChar_2}
+              alt="Aayush Barik"
+              className="w-full h-full object-cover object-[center_15%]"
+            />
+          </div>
+
+        </div>
       </div>
 
       {/* Center links */}

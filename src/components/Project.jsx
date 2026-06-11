@@ -205,6 +205,75 @@ const Project = () => {
       id="projects"
       className="relative scroll-mt-24 overflow-hidden bg-[#f4f1ea] py-20"
     >
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+
+        {/* Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:68px_68px]" />
+
+        {/* Top Right Golden Rings */}
+        <svg
+          className="absolute top-0 right-0 w-[700px] h-[500px] opacity-70"
+          viewBox="0 0 700 500"
+          fill="none"
+        >
+          <circle
+            cx="540"
+            cy="70"
+            r="65"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+
+          <circle
+            cx="650"
+            cy="50"
+            r="80"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+
+          {/* Flow Line 1 */}
+          <path
+            d="M320 450C430 390 450 320 560 250C620 210 660 140 700 120"
+            stroke="#D6B05E"
+            strokeWidth="1.5"
+          />
+
+          {/* Flow Line 2 */}
+          <path
+            d="M360 500C500 430 520 360 620 290C680 250 710 180 740 150"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+
+          {/* Flow Line 3 */}
+          <path
+            d="M250 520C400 470 430 390 520 330C620 260 660 180 710 170"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+        </svg>
+
+        {/* Bottom Left Ring */}
+        <svg
+          className="absolute -left-32 bottom-0 w-[350px] h-[350px] opacity-20"
+          viewBox="0 0 350 350"
+          fill="none"
+        >
+          <circle
+            cx="175"
+            cy="175"
+            r="140"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+        </svg>
+
+        {/* Decorative Dots */}
+        <div className="absolute top-24 left-24 h-2 w-2 rounded-full bg-[#D6B05E]/40" />
+        <div className="absolute bottom-32 right-32 h-2 w-2 rounded-full bg-[#D6B05E]/40" />
+
+      </div>
       <span className="sr-only" />
 
       {/* Header */}

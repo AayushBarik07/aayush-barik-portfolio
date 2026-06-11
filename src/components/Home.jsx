@@ -2,19 +2,160 @@ import { useEffect, useState } from 'react';
 import { Hand } from 'lucide-react';
 import profileImage from '../assets/PFP.png';
 import { ArrowUpRight } from 'lucide-react';
+
 const Home = () => {
   const [showWave, setShowWave] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setShowWave((prev) => !prev), 3000);
     return () => clearInterval(timer);
   }, []);
-  
+
+  useEffect(() => {
+    // slight delay so CSS transitions fire after paint
+    const t = setTimeout(() => setMounted(true), 80);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <section className="w-full min-h-[calc(100vh-72px)] bg-[#f4f1ea] flex flex-col items-center justify-center overflow-hidden px-6 py-8 sm:px-10 md:px-14 lg:px-20 lg:py-10 mt-16 scroll-mt-24" id="home">
+    <section
+      className="w-full min-h-[calc(100vh-72px)] bg-[#f4f1ea] flex flex-col items-center justify-center overflow-hidden px-6 py-8 sm:px-10 md:px-14 lg:px-20 lg:py-10 mt-16 scroll-mt-24"
+      id="home"
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:70px_70px]" />
+
+        <svg
+          className="absolute right-0 top-0 w-[900px] h-[700px] opacity-50"
+          viewBox="0 0 900 700"
+          fill="none"
+        >
+          <path
+            d="M100 650C250 520 320 430 450 340C620 220 720 100 900 40"
+            stroke="#D6B05E"
+            strokeWidth="1.5"
+          />
+
+          <path
+            d="M160 700C310 570 380 470 510 380C680 260 780 140 900 90"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+
+          <circle
+            cx="720"
+            cy="90"
+            r="70"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+
+          <circle
+            cx="840"
+            cy="60"
+            r="90"
+            stroke="#D6B05E"
+            strokeWidth="1"
+          />
+        </svg>
+
+      </div>
+      
+      {/* ── keyframes injected once ── */}
+      <style>{`
+        /* waving hand */
+        .wave-animate {
+          transform-origin: 70% 80%;
+          animation: wave-hand 1.4s ease-in-out infinite;
+        }
+        @keyframes wave-hand {
+          0%,100% { transform: rotate(0deg); }
+          20%      { transform: rotate(18deg); }
+          40%      { transform: rotate(-8deg); }
+          60%      { transform: rotate(16deg); }
+          80%      { transform: rotate(-4deg); }
+        }
+
+        /* single-pass conic beam around the image */
+        @keyframes beam-once {
+          0%   { transform: rotate(0deg);   opacity: 1; }
+          85%  { opacity: 1; }
+          100% { transform: rotate(360deg); opacity: 0; }
+        }
+        .beam-ring {
+          animation: beam-once 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s 1 forwards;
+          opacity: 0;
+        }
+
+        /* soft pulse glow after beam finishes */
+        @keyframes glow-pulse {
+          0%, 100% { opacity: 0.35; transform: scale(1); }
+          50%       { opacity: 0.6;  transform: scale(1.03); }
+        }
+        .glow-ring {
+          animation: glow-pulse 3s ease-in-out 2.2s infinite;
+          opacity: 0;
+        }
+
+        /* entrance: fade + slide up */
+        .fade-up {
+          opacity: 0;
+          transform: translateY(32px);
+          transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                      transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .fade-up.in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* entrance: fade + slide in from left */
+        .fade-left {
+          opacity: 0;
+          transform: translateX(-36px);
+          transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                      transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .fade-left.in {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        /* entrance: fade + slide in from right */
+        .fade-right {
+          opacity: 0;
+          transform: translateX(36px);
+          transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                      transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .fade-right.in {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        /* entrance: scale up from center */
+        .scale-in {
+          opacity: 0;
+          transform: scale(0.88);
+          transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1),
+                      transform 0.65s cubic-bezier(0.16,1,0.3,1);
+        }
+        .scale-in.in {
+          opacity: 1;
+          transform: scale(1);
+        }
+      `}</style>
+
       <div className="w-full max-w-[1700px] mx-auto flex flex-wrap md:flex-nowrap items-center justify-center gap-4 md:gap-8 lg:gap-10">
-        <div className="relative z-20 mx-2 sm:mx-4 md:-mr-8 lg:-mr-10 md:-mt-5 lg:-mt-13 flex flex-col items-start justify-center">
+
+        {/* ── LEFT — "I'm WEBSITE" ── */}
+        <div
+          className={`fade-left relative z-20 mx-2 sm:mx-4 md:-mr-8 lg:-mr-10 md:-mt-5 lg:-mt-13 flex flex-col items-start justify-center ${mounted ? 'in' : ''}`}
+          style={{ transitionDelay: '0.05s' }}
+        >
           <span className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-[0.08em] uppercase text-black">
             I&apos;m
           </span>
@@ -23,13 +164,59 @@ const Home = () => {
           </h1>
         </div>
 
-        <div className="relative z-10 shrink-0">
+        {/* ── CENTER — profile image with beam ── */}
+        <div
+          className={`scale-in relative z-10 shrink-0 ${mounted ? 'in' : ''}`}
+          style={{ transitionDelay: '0.18s' }}
+        >
+          {/* ── outer glow ring (pulses after beam) ── */}
+          <div
+            className="glow-ring absolute inset-[-6px] rounded-full pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle, rgba(199,244,100,0.18) 60%, transparent 100%)',
+            }}
+          />
+
+          {/* ── SVG beam that travels once around the circumference ── */}
+          <svg
+            className="beam-ring absolute pointer-events-none"
+            style={{
+              top: '-10px',
+              left: '-10px',
+              width: 'calc(100% + 20px)',
+              height: 'calc(100% + 20px)',
+            }}
+            viewBox="0 0 220 220"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="beamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stopColor="#c7f464" stopOpacity="0" />
+                <stop offset="60%"  stopColor="#c7f464" stopOpacity="0.9" />
+                <stop offset="80%"  stopColor="#ffffff" stopOpacity="1" />
+                <stop offset="100%" stopColor="#c7f464" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+            {/* full circle stroked with the gradient */}
+            <circle
+              cx="110" cy="110" r="104"
+              stroke="url(#beamGrad)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              pathLength="100"
+              strokeDasharray="28 72"
+            />
+          </svg>
+
+          {/* ── actual profile image ── */}
           <img
             src={profileImage}
             alt="profile"
             className="h-[13rem] w-[13rem] sm:h-[15rem] sm:w-[15rem] md:h-[18rem] md:w-[18rem] lg:h-[22rem] lg:w-[22rem] object-contain rounded-full"
           />
 
+          {/* ── wave / hi badge ── */}
           <div className="absolute left-2 bottom-2 sm:left-3 sm:bottom-3 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#c7f464] shadow-lg flex items-center justify-center">
             {showWave ? (
               <Hand className="w-8 h-8 text-black wave-animate" />
@@ -39,12 +226,21 @@ const Home = () => {
           </div>
         </div>
 
-        <h1 className="relative z-20 mx-2 sm:mx-4 md:-ml-8 lg:-ml-10 md:-mt-1 lg:-mt-2 text-center text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.02em] leading-none text-slate-950 bg-gradient-to-r from-slate-900 via-slate-900 to-gray-500 bg-clip-text text-transparent">
+        {/* ── RIGHT — "DEVELOPER" ── */}
+        <h1
+          className={`fade-right relative z-20 mx-2 sm:mx-4 md:-ml-8 lg:-ml-10 md:-mt-1 lg:-mt-2 text-center text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.02em] leading-none text-slate-950 bg-gradient-to-r from-slate-900 via-slate-900 to-gray-500 bg-clip-text text-transparent ${mounted ? 'in' : ''}`}
+          style={{ transitionDelay: '0.05s' }}
+        >
           DEVELOPER
         </h1>
       </div>
+
+      {/* ── tagline ── */}
       <div className="w-full flex justify-center mt-6 px-4">
-        <p className="max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5  text-black font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em]">
+        <p
+          className={`fade-up max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5 text-black font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em] ${mounted ? 'in' : ''}`}
+          style={{ transitionDelay: '0.32s' }}
+        >
           Building modern web experiences with{' '}
           <span className="bg-gradient-to-r from-black via-black to-gray-500 bg-clip-text text-transparent">
             full-stack and AI technologies
@@ -53,252 +249,19 @@ const Home = () => {
         </p>
       </div>
 
+      {/* ── CTA button ── */}
       <div className="w-full flex justify-center mt-10">
-  
-          <a href="#contact"
-            className="group inline-flex items-center justify-center gap-3 whitespace-nowrap border-2 border-black bg-[#c7f464] px-7 py-3.5 font-black text-black text-sm sm:text-base tracking-[0.12em] uppercase transition-all duration-200 hover:bg-black hover:text-[#d4f705] hover:border-black rounded-full"
-          >
-            <span>Contect with me</span>
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+        
+        <a href="#contact"
+          className={`fade-up group inline-flex items-center justify-center gap-3 whitespace-nowrap border-2 border-black bg-[#c7f464] px-7 py-3.5 font-black text-black text-sm sm:text-base tracking-[0.12em] uppercase transition-all duration-200 hover:bg-black hover:text-[#d4f705] hover:border-black rounded-full ${mounted ? 'in' : ''}`}
+          style={{ transitionDelay: '0.44s' }}
+        >
+          <span>Contact with me</span>
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </a>
       </div>
-
     </section>
   );
 };
 
 export default Home;
-
-// import { useEffect, useState, useRef } from 'react';
-// import { Hand } from 'lucide-react';
-// import profileImage from '../assets/PFP.png';
-// import { ArrowUpRight } from 'lucide-react';
-
-// const Home = () => {
-//   const [showWave, setShowWave] = useState(true);
-//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-//   const [mounted, setMounted] = useState(false);
-//   const sectionRef = useRef(null);
-
-//   useEffect(() => {
-//     const timer = setInterval(() => setShowWave((prev) => !prev), 3000);
-//     return () => clearInterval(timer);
-//   }, []);
-
-//   useEffect(() => {
-//     setMounted(true);
-//   }, []);
-
-//   useEffect(() => {
-//     const handleMouse = (e) => {
-//       if (!sectionRef.current) return;
-//       const rect = sectionRef.current.getBoundingClientRect();
-//       setMousePos({
-//         x: ((e.clientX - rect.left) / rect.width) * 100,
-//         y: ((e.clientY - rect.top) / rect.height) * 100,
-//       });
-//     };
-//     window.addEventListener('mousemove', handleMouse);
-//     return () => window.removeEventListener('mousemove', handleMouse);
-//   }, []);
-
-//   return (
-//     <section
-//       ref={sectionRef}
-//       className="w-full min-h-[calc(100vh-72px)] bg-[#f4f1ea] flex flex-col items-center justify-center overflow-hidden px-6 py-8 sm:px-10 md:px-14 lg:px-20 lg:py-10 mt-16 scroll-mt-24 relative"
-//       id="home"
-//     >
-//       {/* subtle radial spotlight that follows cursor */}
-//       <div
-//         className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-700"
-//         style={{
-//           background: `radial-gradient(38% 38% at ${mousePos.x}% ${mousePos.y}%, rgba(199,244,100,0.18) 0%, transparent 100%)`,
-//         }}
-//       />
-
-//       {/* faint grain texture overlay */}
-//       <div
-//         className="pointer-events-none absolute inset-0 z-0 opacity-[0.025]"
-//         style={{
-//           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-//           backgroundSize: '200px 200px',
-//         }}
-//       />
-
-//       {/* thin horizontal rule lines for editorial feel */}
-//       <div className="pointer-events-none absolute inset-x-0 top-[18%] h-px bg-black/[0.06] z-0" />
-//       <div className="pointer-events-none absolute inset-x-0 bottom-[22%] h-px bg-black/[0.06] z-0" />
-
-//       {/* ── Main hero row ── */}
-//       <div
-//         className="relative z-10 w-full max-w-[1700px] mx-auto flex flex-wrap md:flex-nowrap items-center justify-center gap-4 md:gap-8 lg:gap-10"
-//         style={{
-//           opacity: mounted ? 1 : 0,
-//           transform: mounted ? 'translateY(0)' : 'translateY(28px)',
-//           transition: 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)',
-//         }}
-//       >
-//         {/* LEFT — "I'm WEBSITE" */}
-//         <div className="relative z-20 mx-2 sm:mx-4 md:-mr-8 lg:-mr-10 md:-mt-5 lg:-mt-13 flex flex-col items-start justify-center">
-//           {/* floating "I'm" badge */}
-//           <span
-//             className="mb-3 inline-flex items-center gap-1.5 border border-black/10 bg-white/70 backdrop-blur-sm px-3 py-1 text-xs font-bold tracking-[0.18em] uppercase text-black/60"
-//             style={{ borderRadius: '2px' }}
-//           >
-//             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#c7f464]" />
-//             I&apos;m
-//           </span>
-
-//           <h1
-//             className="text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase leading-none text-black"
-//             style={{
-//               letterSpacing: '-0.04em',
-//               WebkitTextStroke: '0px',
-//               transition: 'letter-spacing 0.4s ease',
-//             }}
-//           >
-//             {/* each letter gets a staggered entrance */}
-//             {'WEBSITE'.split('').map((ch, i) => (
-//               <span
-//                 key={i}
-//                 className="inline-block"
-//                 style={{
-//                   opacity: mounted ? 1 : 0,
-//                   transform: mounted ? 'translateY(0)' : 'translateY(40px)',
-//                   transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${0.12 + i * 0.055}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${0.12 + i * 0.055}s`,
-//                 }}
-//               >
-//                 {ch}
-//               </span>
-//             ))}
-//           </h1>
-//         </div>
-
-//         {/* CENTER — profile image */}
-//         <div className="relative z-10 shrink-0">
-//           {/* outer ring pulse */}
-//           <div className="absolute inset-0 rounded-full animate-ping opacity-[0.07] bg-[#c7f464]" style={{ animationDuration: '3s' }} />
-
-//           <div
-//             className="relative"
-//             style={{
-//               opacity: mounted ? 1 : 0,
-//               transform: mounted ? 'scale(1)' : 'scale(0.88)',
-//               transition: 'opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s',
-//             }}
-//           >
-//             {/* decorative bracket lines around image */}
-//             <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-black/20 rounded-tl-sm" />
-//             <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-black/20 rounded-tr-sm" />
-//             <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-black/20 rounded-bl-sm" />
-//             <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-black/20 rounded-br-sm" />
-
-//             <img
-//               src={profileImage}
-//               alt="profile"
-//               className="h-[13rem] w-[13rem] sm:h-[15rem] sm:w-[15rem] md:h-[18rem] md:w-[18rem] lg:h-[22rem] lg:w-[22rem] object-contain rounded-full"
-//               style={{ filter: 'contrast(1.04) saturate(0.96)' }}
-//             />
-
-//             {/* wave / hi badge */}
-//             <div
-//               className="absolute left-2 bottom-2 sm:left-3 sm:bottom-3 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#c7f464] shadow-lg flex items-center justify-center border-2 border-white"
-//               style={{ boxShadow: '0 8px 32px rgba(199,244,100,0.45)' }}
-//             >
-//               {showWave ? (
-//                 <Hand className="w-8 h-8 text-black wave-animate" />
-//               ) : (
-//                 <span className="text-2xl sm:text-3xl font-black text-black">Hi</span>
-//               )}
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* RIGHT — "DEVELOPER" */}
-//         <h1
-//           className="relative z-20 mx-2 sm:mx-4 md:-ml-8 lg:-ml-10 md:-mt-1 lg:-mt-2 text-center text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase leading-none text-slate-950 bg-gradient-to-r from-slate-900 via-slate-900 to-gray-500 bg-clip-text text-transparent"
-//           style={{ letterSpacing: '-0.02em' }}
-//         >
-//           {'DEVELOPER'.split('').map((ch, i) => (
-//             <span
-//               key={i}
-//               className="inline-block"
-//               style={{
-//                 opacity: mounted ? 1 : 0,
-//                 transform: mounted ? 'translateY(0)' : 'translateY(40px)',
-//                 transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${0.28 + i * 0.045}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${0.28 + i * 0.045}s`,
-//               }}
-//             >
-//               {ch}
-//             </span>
-//           ))}
-//         </h1>
-//       </div>
-
-//       {/* ── tagline ── */}
-//       <div
-//         className="relative z-10 w-full flex justify-center mt-6 px-4"
-//         style={{
-//           opacity: mounted ? 1 : 0,
-//           transform: mounted ? 'translateY(0)' : 'translateY(16px)',
-//           transition: 'opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.55s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.55s',
-//         }}
-//       >
-//         <p className="max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5 text-black font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em] bg-white/40 backdrop-blur-sm">
-//           Building modern web experiences with{' '}
-//           <span className="bg-gradient-to-r from-black via-black to-gray-500 bg-clip-text text-transparent">
-//             full-stack and AI technologies
-//           </span>
-//           .
-//         </p>
-//       </div>
-
-//       {/* ── CTA button ── */}
-//       <div
-//         className="relative z-10 w-full flex justify-center mt-10"
-//         style={{
-//           opacity: mounted ? 1 : 0,
-//           transform: mounted ? 'translateY(0)' : 'translateY(16px)',
-//           transition: 'opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s',
-//         }}
-//       >
-//         <a
-//           href="#contact"
-//           className="group relative inline-flex items-center justify-center gap-3 whitespace-nowrap border-2 border-black bg-[#c7f464] px-7 py-3.5 font-black text-black text-sm sm:text-base tracking-[0.12em] uppercase overflow-hidden rounded-full transition-colors duration-300 hover:border-black"
-//           style={{ boxShadow: '4px 4px 0px 0px rgba(0,0,0,0.85)' }}
-//           onMouseEnter={e => { e.currentTarget.style.boxShadow = '2px 2px 0px 0px rgba(0,0,0,0.85)'; e.currentTarget.style.transform = 'translate(2px, 2px)'; }}
-//           onMouseLeave={e => { e.currentTarget.style.boxShadow = '4px 4px 0px 0px rgba(0,0,0,0.85)'; e.currentTarget.style.transform = 'translate(0,0)'; }}
-//         >
-//           {/* sliding fill on hover */}
-//           <span
-//             className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-//             aria-hidden="true"
-//           />
-//           <span className="relative z-10 transition-colors duration-300 group-hover:text-[#c7f464]">
-//             Contact Me
-//           </span>
-//           <ArrowUpRight
-//             className="relative z-10 h-4 w-4 transition-all duration-300 group-hover:text-[#c7f464] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-//           />
-//         </a>
-//       </div>
-
-//       {/* global wave keyframe — only for Hand icon */}
-//       <style>{`
-//         .wave-animate {
-//           transform-origin: 70% 80%;
-//           animation: wave-hand 1.4s ease-in-out infinite;
-//         }
-//         @keyframes wave-hand {
-//           0%,100% { transform: rotate(0deg); }
-//           20%      { transform: rotate(18deg); }
-//           40%      { transform: rotate(-8deg); }
-//           60%      { transform: rotate(16deg); }
-//           80%      { transform: rotate(-4deg); }
-//         }
-//       `}</style>
-//     </section>
-//   );
-// };
-
-// export default Home;
