@@ -280,7 +280,7 @@ const Project = () => {
       <div className="w-full mt-10 px-6 sm:px-10 lg:px-20">
         <div className="mb-15 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h3 className="mt-3 text-[clamp(2.5rem,5vw,5.5rem)] font-black uppercase tracking-[-0.07em] leading-[0.9] text-slate-900">
+            <h3 className="mt-3 text-[clamp(2.5rem,5vw,5.5rem)] font-black uppercase tracking-[-0.07em] leading-[0.9] text-[#13221c]">
               Featured Projects
             </h3>
           </div>
@@ -289,10 +289,28 @@ const Project = () => {
               href="https://github.com/AayushBarik07"
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-colors duration-200 hover:bg-black hover:text-white"
+              className=" 
+                group relative hidden sm:inline-flex items-center gap-2
+                px-6 py-3 rounded-[999px]
+                bg-[#f5f7fb]
+                text-[#13221c]
+                font-semibold text-sm
+                transition-all duration-300
+                shadow-[8px_8px_18px_rgba(0,0,0,0.12),-8px_-8px_18px_rgba(255,255,255,0.9)]
+                hover:shadow-[0_0_25px_rgba(255,80,80,0.25),8px_8px_18px_rgba(0,0,0,0.12)]
+                hover:-translate-y-1
+                before:absolute
+                before:inset-0
+                before:rounded-full
+                before:shadow-[inset_2px_2px_4px_rgba(255,255,255,0.8)]
+              "
             >
-              View All Projects
-              <ArrowUpRight className="h-4 w-4" />
+              {/* Glow */}
+              <span className="absolute inset-0 rounded-full bg-red-400/20 blur-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+              <span className="relative z-10">View All Projects</span>
+
+              <ArrowUpRight className="relative z-10 h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </div>
         </div>
@@ -301,11 +319,11 @@ const Project = () => {
       {/* Content area — full bleed */}
       <div className="relative mt-8 w-screen" style={{ marginLeft: 'calc(50% - 50vw)' }}>
         {loading ? (
-          <div className="mx-6 rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center text-slate-600 shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+          <div className="mx-6 rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center text-[#13221c] shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
             Loading pinned projects...
           </div>
         ) : error ? (
-          <div className="mx-6 rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center text-slate-600 shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+          <div className="mx-6 rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center text-[#13221c] shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
             {error}
           </div>
         ) : selectedProject ? (
@@ -326,13 +344,13 @@ const Project = () => {
                       </span>
                       <span className="text-sm text-slate-500">{selectedProject.date}</span>
                     </div>
-                    <h3 className="text-[clamp(2.2rem,5vw,4.4rem)] font-black uppercase tracking-[-0.07em] leading-[0.95] text-slate-900">
+                    <h3 className="text-[clamp(2.2rem,5vw,4.4rem)] font-black uppercase tracking-[-0.07em] leading-[0.95] text-[#13221c]">
                       {selectedProject.title}
                     </h3>
-                    <p className="max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+                    <p className="max-w-2xl text-base leading-8 text-[#13221c] sm:text-lg">
                       {selectedProject.description}
                     </p>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-slate-50 px-4 py-2 text-sm font-medium text-[#13221c]">
                       <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.95)]" />
                       {selectedProject.language}
                     </div>
@@ -341,7 +359,7 @@ const Project = () => {
                     <button
                       type="button"
                       onClick={() => { setSelectedProject(null) }}
-                      className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-colors duration-200 hover:bg-slate-100"
+                      className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-[#13221c] shadow-sm transition-colors duration-200 hover:bg-slate-100"
                     >
                       ← Back
                     </button>
@@ -373,7 +391,7 @@ const Project = () => {
               <button
                 type="button"
                 onClick={() => setGridRevealed(false)}
-                className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-colors duration-200 hover:bg-slate-100"
+                className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-2.5 text-sm font-semibold text-[#13221c] shadow-sm transition-colors duration-200 hover:bg-slate-100 cursor-pointer"
               >
                 ← Hide Projects
               </button>
@@ -389,12 +407,8 @@ const Project = () => {
         )}
       </div>
       <div className="w-full flex justify-center mt-6 px-4">
-        <p className="max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5  text-black font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em]">
+        <p className="max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5  text-[#13221c] font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em]">
           Code. Create. Improve. Repeat.{' '}
-          {/* <span className="bg-gradient-to-r from-black via-black to-gray-500 bg-clip-text text-transparent">
-            Code. Create. Improve. Repeat.
-          </span>
-          . */}
         </p>
       </div>
 
@@ -408,4 +422,4 @@ const Project = () => {
   )
 }
 
-export default Project
+export default Project;

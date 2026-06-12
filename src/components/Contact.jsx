@@ -116,7 +116,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-none text-[#1E2A44]"
+            className="text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-none text-[#13221c]"
           >
             GET IN TOUCH
           </motion.h1>
@@ -157,7 +157,7 @@ const Contact = () => {
 
               {/* Name + title */}
               <div className="relative px-5 pt-3 pb-4 text-center">
-                <h3 className="text-3xl font-black text-[#1E2A44]">Aayush Barik</h3>
+                <h3 className="text-3xl font-black text-[#13221c]">Aayush Barik</h3>
                 <p className="mt-2 uppercase tracking-[4px] text-sm text-slate-400">
                   WEB DEVELOPER <span className="mx-2">•</span>
                   <span className="text-blue-500">OPEN TO WORK</span>
@@ -279,7 +279,7 @@ const Contact = () => {
                     </div>
                     <button
                       onClick={() => { setSent(false); setForm({ name: '', email: '', message: '' }); }}
-                      className="mt-3 text-sm font-semibold text-[#D6B05E] hover:text-[#1E2A44] transition-colors"
+                      className="mt-3 text-sm font-semibold text-[#D6B05E] hover:text-[#1E2A44] transition-colors cursor-pointer"
                     >
                       Send another message
                     </button>
@@ -327,15 +327,36 @@ const Contact = () => {
 
                     <div className="flex justify-end pt-2">
                       <motion.button
-                        type="submit" disabled={loading}
-                        whileHover={{ y: -2, scale: 1.02 }}
+                        type="submit"
+                        disabled={loading}
+                        whileHover={{ y: -3, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="group inline-flex items-center gap-3 rounded-full bg-[#1E2A44] px-8 py-4 text-sm font-semibold text-white transition-all duration-300 hover:shadow-xl hover:shadow-black/10 disabled:opacity-60"
-                      >
+                        className="group relative overflow-hidden inline-flex items-center gap-3 rounded-[22px] px-8 py-4 text-sm font-semibold text-white cursor-pointer transition-all duration-300 bg-gradient-to-b
+                          from-[#294239]
+                          via-[#1d322a]
+                          to-[#13221c]
+
+                          shadow-[0_12px_24px_rgba(0,0,0,0.35),inset_0_2px_2px_rgba(255,255,255,0.12),inset_0_-2px_2px_rgba(0,0,0,0.25)]
+
+                          hover:shadow-[0_18px_35px_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.15)]
+                          disabled:opacity-60
+                        ">
+                        {/* Top glossy highlight */}
+                        <span className="absolute left-2 right-2 top-1 h-[35%] rounded-full bg-white/10 blur-md" />
+
+                        {/* Right side shine */}
+                        <span className="absolute right-3 top-2 h-[70%] w-6 rounded-full bg-white/10 blur-sm" />
+
                         {loading ? (
-                          <><span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />Sending...</>
+                          <>
+                            <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                            <span className="relative z-10">Sending...</span>
+                          </>
                         ) : (
-                          <><span>Send Message</span><FaArrowRight /></>
+                          <>
+                            <span className="relative z-10">Send Message</span>
+                            <FaArrowRight className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+                          </>
                         )}
                       </motion.button>
                     </div>

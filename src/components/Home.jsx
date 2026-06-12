@@ -156,10 +156,10 @@ const Home = () => {
           className={`fade-left relative z-20 mx-2 sm:mx-4 md:-mr-8 lg:-mr-10 md:-mt-5 lg:-mt-13 flex flex-col items-start justify-center ${mounted ? 'in' : ''}`}
           style={{ transitionDelay: '0.05s' }}
         >
-          <span className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-[0.08em] uppercase text-black">
+          <span className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-[0.08em] uppercase text-[#13221c]">
             I&apos;m
           </span>
-          <h1 className="text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.04em] leading-none text-black">
+          <h1 className="text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.04em] leading-none text-[#13221c]">
             WEBSITE
           </h1>
         </div>
@@ -228,7 +228,7 @@ const Home = () => {
 
         {/* ── RIGHT — "DEVELOPER" ── */}
         <h1
-          className={`fade-right relative z-20 mx-2 sm:mx-4 md:-ml-8 lg:-ml-10 md:-mt-1 lg:-mt-2 text-center text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.02em] leading-none text-slate-950 bg-gradient-to-r from-slate-900 via-slate-900 to-gray-500 bg-clip-text text-transparent ${mounted ? 'in' : ''}`}
+          className={`fade-right relative z-20 mx-2 sm:mx-4 md:-ml-8 lg:-ml-10 md:-mt-1 lg:-mt-2 text-center text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.02em] leading-none text-[#13221c] bg-linear-to-r from-[#13221c] via-[#1d322a] to-[#73807b] bg-clip-text text-transparent ${mounted ? 'in' : ''}`}
           style={{ transitionDelay: '0.05s' }}
         >
           DEVELOPER
@@ -242,7 +242,7 @@ const Home = () => {
           style={{ transitionDelay: '0.32s' }}
         >
           Building modern web experiences with{' '}
-          <span className="bg-gradient-to-r from-black via-black to-gray-500 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-[#13221c] via-[#1d322a] to-[#73807b] bg-clip-text text-transparent">
             full-stack and AI technologies
           </span>
           .
@@ -251,13 +251,41 @@ const Home = () => {
 
       {/* ── CTA button ── */}
       <div className="w-full flex justify-center mt-10">
-        
-        <a href="#contact"
-          className={`fade-up group inline-flex items-center justify-center gap-3 whitespace-nowrap border-2 border-black bg-[#c7f464] px-7 py-3.5 font-black text-black text-sm sm:text-base tracking-[0.12em] uppercase transition-all duration-200 hover:bg-black hover:text-[#d4f705] hover:border-black rounded-full ${mounted ? 'in' : ''}`}
-          style={{ transitionDelay: '0.44s' }}
+        <a
+          href="#contact"
+          className={`group relative overflow-hidden inline-flex items-center gap-3 px-10 py-4 rounded-[28px] bg-linear-to-b
+            from-[#2f4a40]
+            via-[#1f352d]
+            to-[#14231d]
+
+            text-white font-medium
+
+            shadow-[0_12px_24px_rgba(0,0,0,0.35),inset_0_2px_2px_rgba(255,255,255,0.12),inset_0_-2px_2px_rgba(0,0,0,0.25)]
+
+            transition-all duration-300 hover:-translate-y-1
+
+            hover:bg-white
+            hover:bg-none
+            hover:text-black
+
+            hover:shadow-[0_18px_35px_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.15)]
+
+            ${mounted ? "in" : ""}
+          `}
+          style={{ transitionDelay: "0.1s" }}
         >
-          <span>Contact with me</span>
-          <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          {/* Top glossy layer */}
+          <span className="absolute left-3 right-3 top-1 h-[40%] rounded-full bg-white/10 blur-md" />
+
+          {/* Side reflection */}
+          <span className="absolute right-4 top-2 h-[70%] w-5 rounded-full bg-white/10 blur-sm" />
+
+          {/* Hover glow */}
+          <span className="absolute inset-0 rounded-[28px] bg-emerald-300/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
+
+          <span className="relative z-10">Connect with me</span>
+
+          <ArrowUpRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
         </a>
       </div>
     </section>

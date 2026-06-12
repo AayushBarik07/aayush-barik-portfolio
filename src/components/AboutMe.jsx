@@ -288,7 +288,7 @@ const AboutMe = () => {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center text-[clamp(3rem,9vw,7.5rem)] font-black uppercase tracking-[-0.06em] leading-none bg-gradient-to-r from-slate-950 via-slate-800 to-slate-400 bg-clip-text text-transparent"
+            className="text-center text-[clamp(3rem,9vw,7.5rem)] font-black uppercase tracking-[-0.06em] leading-none bg-gradient-to-r from-[#13221c] via-[#1d322a] to-[#73807b] bg-clip-text text-transparent"
           >
             ABOUT ME
           </motion.h1>
@@ -311,7 +311,7 @@ const AboutMe = () => {
             >
               {/* Section header */}
               <motion.div variants={itemVariants} className="flex items-center justify-between px-1">
-                <h2 className="text-xl font-black tracking-tight text-slate-900">My Stack</h2>
+                <h2 className="text-xl font-black tracking-tight text-[#13221c]">My Stack</h2>
               </motion.div>
 
               {stackGroups.map((group) => {
@@ -329,10 +329,10 @@ const AboutMe = () => {
                     className={`rounded-2xl ${thinBorder} bg-gradient-to-br ${group.accent} p-4 shadow-sm transition-shadow duration-300 hover:shadow-md`}
                   >
                     <div className="mb-3 flex items-center gap-2.5">
-                      <div className="rounded-xl border border-white/50 bg-white/80 p-1.5 text-slate-900 shadow-sm">
+                      <div className="rounded-xl border border-white/50 bg-white/80 p-1.5 text-[#13221c] shadow-sm">
                         <GroupIcon className="h-4 w-4" />
                       </div>
-                      <h3 className="text-sm font-bold text-slate-900">{group.title}</h3>
+                      <h3 className="text-sm font-bold text-[#13221c]">{group.title}</h3>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {group.items.map((item) => (
@@ -370,7 +370,7 @@ const AboutMe = () => {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="mb-5 text-[clamp(3rem,7.5vw,6rem)] leading-none font-black tracking-tight text-slate-900"
+                  className="mb-5 text-[clamp(3rem,7.5vw,6rem)] leading-none font-black tracking-tight text-[#13221c]"
                 >
                   Aayush Barik
                 </motion.h1>
@@ -410,7 +410,7 @@ const AboutMe = () => {
                       className="absolute top-[-3%] right-[18%] z-10"
                     >
                       <div className="relative rounded-2xl bg-white border border-gray-200/60 shadow-sm px-3 py-1.5 sm:px-4 sm:py-2">
-                        <span className="text-[0.68rem] sm:text-xs font-bold uppercase tracking-wide text-slate-800 font-mono whitespace-nowrap">
+                        <span className="text-[0.68rem] sm:text-xs font-bold uppercase tracking-wide text-[#13221c] font-mono whitespace-nowrap">
                           Let me introduce myself
                         </span>
                         {/* Tail points down toward the head */}
@@ -466,7 +466,7 @@ const AboutMe = () => {
               transition={{ duration: 0.4 }}
             >
               <div className="mb-3 flex items-center justify-between px-1">
-                <h2 className="text-xl font-black tracking-tight text-slate-900">My Experience</h2>
+                <h2 className="text-xl font-black tracking-tight text-[#13221c]">My Experience</h2>
               </div>
               <div className="space-y-3">
                 {experiences.map((exp, i) => (
@@ -483,8 +483,7 @@ const AboutMe = () => {
               transition={{ duration: 0.5, delay: 0.15 }}
             >
               <div className="mb-3 flex items-center justify-between px-1">
-                <h2 className="text-xl font-black tracking-tight text-slate-900">Find Me On</h2>
-                <CodeLabel>social</CodeLabel>
+                <h2 className="text-xl font-black tracking-tight text-[#13221c]">Find Me On</h2>
               </div>
               <div className="space-y-2.5">
                 {socials.map((social, i) => {
@@ -506,8 +505,8 @@ const AboutMe = () => {
                         <SocialIcon className="h-4 w-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-slate-900">{social.name}</p>
-                        <p className="text-xs text-slate-500 font-mono">{social.handle}</p>
+                        <p className="text-sm font-bold text-[#13221c]">{social.name}</p>
+                        <p className="text-xs text-[#13221c] font-mono">{social.handle}</p>
                       </div>
                       <motion.span
                         whileHover={{ x: 3 }}
