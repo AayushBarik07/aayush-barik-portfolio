@@ -18,6 +18,9 @@ const toShowcaseProject = (repo, index) => ({
   date: formatDate(repo.updatedAt),
   description: repo.description || 'Pinned GitHub repository from the portfolio showcase.',
   url: repo.url,
+  homepageUrl: repo.homepageUrl || null,
+  techStack: repo.repositoryTopics?.nodes?.map(node => node.topic.name) || [],
+  readmeContent: repo.object?.text || '',
   language: repo.primaryLanguage?.name || 'Code',
   variant: index % 2 === 0 ? 'editorial' : 'workspace',
 })
@@ -174,6 +177,115 @@ const ProjectCard = ({ project, onViewProject }) => (
   </article>
 )
 
+const ProjectModal = ({ project, onClose }) => {
+  if (!project) return null;
+
+  const extractSection = (text, heading) => {
+    if (!text) return '';
+    const regex = new RegExp(`#{1,6}\\s*${heading}\\b([\\s\\S]*?)(?=^#{1,6}\\s|$)`, 'im');
+    const match = text.match(regex);
+    return match ? match[1].trim() : '';
+  };
+
+  let implementation = extractSection(project.readmeContent, 'Implementation');
+  let approach = extractSection(project.readmeContent, 'Approach');
+  
+  if (!implementation && !approach) {
+    approach = project.readmeContent ? project.readmeContent : 'No detailed README available.';
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div 
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" 
+        onClick={onClose}
+      />
+      <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-[2rem] border border-black/5 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.15)] overflow-hidden transform transition-all">
+        <div className="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-10">
+          <div className="flex justify-between items-start mb-6 gap-4">
+            <div>
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <span className="inline-flex items-center rounded-full border border-indigo-500/30 bg-indigo-50 px-4 py-1.5 text-sm font-medium text-indigo-600">
+                  {project.category}
+                </span>
+                <span className="text-sm text-slate-500">{project.date}</span>
+              </div>
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-[-0.05em] leading-[0.95] text-[#13221c]">
+                {project.title}
+              </h3>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 -mr-2 rounded-full hover:bg-slate-100 transition-colors cursor-pointer shrink-0 text-slate-500 hover:text-slate-800"
+              aria-label="Close"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+          
+          <p className="text-lg leading-relaxed text-slate-700 mb-8">
+            {project.description}
+          </p>
+
+          {project.techStack && project.techStack.length > 0 && (
+            <div className="mb-8">
+              <h4 className="text-xl font-bold mb-3 text-[#13221c]">Tech Stack</h4>
+              <div className="flex flex-wrap gap-2">
+                {project.techStack.map(tech => (
+                  <span key={tech} className="px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-sm font-medium text-slate-800">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {approach && (
+            <div className="mb-6">
+              <h4 className="text-xl font-bold mb-3 text-[#13221c]">Approach</h4>
+              <div className="prose prose-slate max-w-none text-slate-600">
+                <p className="whitespace-pre-wrap">{approach}</p>
+              </div>
+            </div>
+          )}
+
+          {implementation && (
+            <div className="mb-6">
+              <h4 className="text-xl font-bold mb-3 text-[#13221c]">Implementation</h4>
+              <div className="prose prose-slate max-w-none text-slate-600">
+                <p className="whitespace-pre-wrap">{implementation}</p>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <div className="p-6 sm:px-10 border-t border-slate-100 bg-slate-50 flex flex-wrap items-center gap-4 shrink-0">
+          {project.homepageUrl && (
+            <a
+              href={project.homepageUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-indigo-500 hover:shadow-lg hover:-translate-y-0.5"
+            >
+              <Play className="h-4 w-4" fill="currentColor" />
+              Live Project
+            </a>
+          )}
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5"
+          >
+            View Code
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Project = () => {
   const [repos, setRepos] = useState([])
   const [loading, setLoading] = useState(true)
@@ -286,7 +398,7 @@ const Project = () => {
           </div>
           <div className="flex items-center gap-3 self-start lg:self-auto">
             <a
-              href="https://github.com/AayushBarik07"
+              href="https://github.com/AayushBarik07?tab=repositories"
               target="_blank"
               rel="noreferrer"
               className=" 
@@ -326,57 +438,6 @@ const Project = () => {
           <div className="mx-6 rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center text-[#13221c] shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
             {error}
           </div>
-        ) : selectedProject ? (
-          /* ── Detail View ── */
-          <div className="mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-20">
-            <div className="rounded-[2rem] border border-black/5 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)] overflow-hidden">
-              <div className="grid gap-0 lg:grid-cols-[1.15fr_0.85fr]">
-                <div className="min-h-[22rem] lg:min-h-[40rem] p-3 sm:p-4">
-                  <div className="h-full min-h-[20rem] overflow-hidden rounded-[1.75rem]">
-                    <ProjectArtwork variant={selectedProject.variant} />
-                  </div>
-                </div>
-                <div className="flex flex-col justify-between gap-8 p-6 sm:p-8 lg:p-10 text-left">
-                  <div className="space-y-5">
-                    <div className="flex flex-wrap items-center justify-between gap-4">
-                      <span className="inline-flex items-center rounded-full border border-indigo-500/30 bg-indigo-50 px-4 py-1.5 text-sm font-medium text-indigo-600">
-                        {selectedProject.category}
-                      </span>
-                      <span className="text-sm text-slate-500">{selectedProject.date}</span>
-                    </div>
-                    <h3 className="text-[clamp(2.2rem,5vw,4.4rem)] font-black uppercase tracking-[-0.07em] leading-[0.95] text-[#13221c]">
-                      {selectedProject.title}
-                    </h3>
-                    <p className="max-w-2xl text-base leading-8 text-[#13221c] sm:text-lg">
-                      {selectedProject.description}
-                    </p>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-slate-50 px-4 py-2 text-sm font-medium text-[#13221c]">
-                      <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.95)]" />
-                      {selectedProject.language}
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => { setSelectedProject(null) }}
-                      className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-[#13221c] shadow-sm transition-colors duration-200 hover:bg-slate-100"
-                    >
-                      ← Back
-                    </button>
-                    <a
-                      href={selectedProject.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors duration-200 hover:bg-indigo-500 hover:shadow-lg"
-                    >
-                      Open on GitHub
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         ) : !gridRevealed ? (
           /* ── Marquee (pre-reveal) ── */
           <ProjectMarquee projects={projects} onReveal={() => setGridRevealed(true)} />
@@ -406,6 +467,9 @@ const Project = () => {
           </div>
         )}
       </div>
+      {/* Render Modal if a project is selected */}
+      {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+
       <div className="w-full flex justify-center mt-6 px-4">
         <p className="max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5  text-[#13221c] font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em]">
           Code. Create. Improve. Repeat.{' '}

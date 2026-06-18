@@ -331,7 +331,7 @@ const Contact = () => {
                         disabled={loading}
                         whileHover={{ y: -3, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="group relative overflow-hidden inline-flex items-center gap-3 rounded-[22px] px-8 py-4 text-sm font-semibold text-white cursor-pointer transition-all duration-300 bg-gradient-to-b
+                        className="group relative overflow-hidden inline-flex items-center gap-3 rounded-full px-8 py-4 text-sm font-semibold text-white cursor-pointer transition-all duration-300 bg-gradient-to-b
                           from-[#294239]
                           via-[#1d322a]
                           to-[#13221c]

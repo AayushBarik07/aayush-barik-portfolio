@@ -32,6 +32,19 @@ export async function fetchPinnedRepos() {
                 color
               }
               updatedAt
+              homepageUrl
+              repositoryTopics(first: 10) {
+                nodes {
+                  topic {
+                    name
+                  }
+                }
+              }
+              object(expression: "HEAD:README.md") {
+                ... on Blob {
+                  text
+                }
+              }
             }
           }
         }

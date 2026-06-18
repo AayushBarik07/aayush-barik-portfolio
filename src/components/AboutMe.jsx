@@ -188,26 +188,26 @@ function ExperienceCard({ item, index, total }) {
       {!isLast && (
         <span className="absolute left-[0.58rem] top-5 h-full w-px bg-gradient-to-b from-cyan-300/60 via-gray-200/40 to-transparent" />
       )}
-      <span className="absolute left-0 top-4 flex h-5 w-5 items-center justify-center rounded-full border border-cyan-200/60 bg-white shadow-sm">
-        <span className="h-2.5 w-2.5 rounded-full bg-cyan-500" />
+      <span className="absolute left-0 top-4 flex h-5 w-5 items-center justify-center rounded-full border border-[#D6B05E] bg-white shadow-sm">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#13221c]/60" />
       </span>
       <motion.div
         whileHover={{ scale: 1.04, x: 4 }}
         transition={{ type: 'spring', stiffness: 280, damping: 22 }}
-        className={`w-full rounded-2xl ${thinBorder} bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md hover:border-cyan-200/70`}
+        className={`w-full rounded-2xl ${thinBorder} bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md hover:border-[#D6B05E]/70`}
       >
         <div className="flex items-start gap-3">
-          <div className="rounded-xl border border-cyan-100/60 bg-cyan-50 p-2 text-cyan-600 shrink-0">
+          <div className="rounded-xl border border-[#D6B05E] bg-gray-50 p-2 text-[#13221c] shrink-0">
             <Icon className="h-4 w-4" />
           </div>
           <div className="flex-1 space-y-1.5 min-w-0">
             <div className="flex flex-wrap items-start justify-between gap-1.5">
               <h4 className="text-sm font-bold text-slate-900 leading-tight">{item.role}</h4>
-              <span className="whitespace-nowrap rounded-full border border-gray-200/60 bg-gray-50 px-2.5 py-0.5 text-[10px] font-semibold text-slate-500 font-mono shrink-0">
+              <span className="whitespace-nowrap rounded-full border border-[#D6B05E]/60 bg-[#D6B05E]/10 px-2.5 py-0.5 text-[10px] font-semibold text-[#13221c] font-mono shrink-0">
                 {item.year}
               </span>
             </div>
-            <p className="text-xs font-semibold text-cyan-700">{item.company}</p>
+            <p className="text-xs font-semibold text-[#D6B05E]">{item.company}</p>
           </div>
         </div>
       </motion.div>
@@ -357,9 +357,9 @@ const AboutMe = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.15 }}
-                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-cyan-200/60 bg-white/70 px-4 py-1.5 shadow-sm"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#D6B05E]/60 bg-white/70 px-4 py-1.5 shadow-sm"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#D6B05E] animate-pulse" />
                   <span className="text-xs font-bold uppercase tracking-[0.22em] text-slate-600 font-mono">
                     Web Developer
                   </span>
@@ -499,7 +499,7 @@ const AboutMe = () => {
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: i * 0.09 }}
                       whileHover={{ x: 4, scale: 1.02 }}
-                      className={`flex items-center gap-3 rounded-2xl ${thinBorder} bg-white p-4 shadow-sm transition-all duration-300 hover:border-cyan-300/70 hover:shadow-md`}
+                      className={`flex items-center gap-3 rounded-2xl ${thinBorder} bg-white p-4 shadow-sm transition-all duration-300 hover:border-[#D6B05E]/70 hover:shadow-md`}
                     >
                       <div className={`rounded-xl border ${social.border} ${social.bg} p-2 ${social.color} shrink-0`}>
                         <SocialIcon className="h-4 w-4" />
