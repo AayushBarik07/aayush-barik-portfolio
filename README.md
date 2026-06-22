@@ -7,7 +7,7 @@ Welcome to the source code of my personal portfolio! This project was built to g
 ---
 
 ## 🔗 Live Demo
-[**View the Live Portfolio Here**](#) *(Replace with your actual deployment URL!)*
+[**View the Live Portfolio Here**](https://aayush-barik-portfolio.vercel.app/) 
 
 ---
 
