@@ -1,5 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Play } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+
+import FeedFlowPic from '../assets/CoverImage/FeedFlow-pic.png'
+import HealthcasePic from '../assets/CoverImage/Healthcase-ocr pic.png'
+import LMSPic from '../assets/CoverImage/LMS-pic.png'
+import ChatbotPic from '../assets/CoverImage/chatbot-pic.png'
+import ConvoAIPic from '../assets/CoverImage/convoAI-pic.png'
+import SkillCompassPic from '../assets/CoverImage/skill-compass-pic.png'
+
+const getCoverImage = (title) => {
+  const t = title.toLowerCase().replace(/[-_ ]/g, '');
+  if (t.includes('feedflow')) return FeedFlowPic;
+  if (t.includes('health') || t.includes('ocr')) return HealthcasePic;
+  if (t.includes('lms') || t.includes('learning')) return LMSPic;
+  if (t.includes('chat') && !t.includes('convo')) return ChatbotPic;
+  if (t.includes('convo')) return ConvoAIPic;
+  if (t.includes('compass') || t.includes('skill')) return SkillCompassPic;
+  return null;
+}
 
 const formatDate = (value) => {
   if (!value) return 'Recently updated'
@@ -21,6 +40,7 @@ const toShowcaseProject = (repo, index) => ({
   homepageUrl: repo.homepageUrl || null,
   techStack: repo.repositoryTopics?.nodes?.map(node => node.topic.name) || [],
   readmeContent: repo.object?.text || '',
+  image: getCoverImage(repo.name),
   language: repo.primaryLanguage?.name || 'Code',
   variant: index % 2 === 0 ? 'editorial' : 'workspace',
 })
@@ -61,6 +81,19 @@ const ProjectArtwork = ({ variant }) => {
   )
 }
 
+const ProjectVisual = ({ project }) => {
+  if (project.image) {
+    return (
+      <img 
+        src={project.image} 
+        alt={project.title} 
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+      />
+    )
+  }
+  return <ProjectArtwork variant={project.variant} />
+}
+
 /* ── Marquee strip shown before grid is revealed ── */
 const ProjectMarquee = ({ projects, onReveal }) => {
   const [hovered, setHovered] = useState(false)
@@ -89,10 +122,10 @@ const ProjectMarquee = ({ projects, onReveal }) => {
           <div
             // eslint-disable-next-line react/no-array-index-key
             key={`${project.title}-${i}`}
-            className="h-full shrink-0 rounded-[1.5rem] overflow-hidden"
+            className="h-full shrink-0 rounded-[1.5rem] overflow-hidden group"
             style={{ width: '28rem' }}
           >
-            <ProjectArtwork variant={project.variant} />
+            <ProjectVisual project={project} />
           </div>
         ))}
       </div>
@@ -138,9 +171,9 @@ const ProjectMarquee = ({ projects, onReveal }) => {
 }
 
 const ProjectCard = ({ project, onViewProject }) => (
-  <article className="relative group overflow-hidden border border-black/5 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_0_0_2.5px_rgba(99,102,241,0.55),0_0_32px_6px_rgba(99,102,241,0.18),0_24px_70px_rgba(15,23,42,0.10)] flex flex-col h-full rounded-[2rem]">
+  <article className="relative group overflow-hidden border border-black/5 dark:border-white/10 bg-white dark:bg-slate-800 shadow-[0_24px_70px_rgba(15,23,42,0.08)] dark:shadow-[0_24px_70px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_0_0_2.5px_rgba(99,102,241,0.55),0_0_32px_6px_rgba(99,102,241,0.18),0_24px_70px_rgba(15,23,42,0.10)] flex flex-col h-full rounded-[2rem]">
     <div className="relative shrink-0 overflow-hidden rounded-t-[2rem]" style={{ height: '22rem' }}>
-      <ProjectArtwork variant={project.variant} />
+      <ProjectVisual project={project} />
       <a
         href={project.url}
         target="_blank"
@@ -158,10 +191,10 @@ const ProjectCard = ({ project, onViewProject }) => (
         </span>
         <span className="text-sm text-slate-500">{project.date}</span>
       </div>
-      <h3 className="mt-5 text-[clamp(2rem,3.8vw,3.35rem)] font-black uppercase tracking-[-0.06em] leading-[0.92] text-slate-900">
+      <h3 className="mt-5 text-[clamp(2rem,3.8vw,3.35rem)] font-black uppercase tracking-[-0.06em] leading-[0.92] text-slate-900 dark:text-slate-100">
         {project.title}
       </h3>
-      <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg flex-1">
+      <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg flex-1">
         {project.description}
       </p>
       <div className="my-4 h-px w-full bg-gradient-to-r from-transparent via-zinc-700/60 to-transparent" />
@@ -169,7 +202,7 @@ const ProjectCard = ({ project, onViewProject }) => (
     <button
       type="button"
       onClick={() => onViewProject(project)}
-      className="absolute right-6 bottom-6 inline-flex items-center gap-2 bg-black px-5 py-2.5 text-sm font-semibold text-white cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-indigo-500 hover:-translate-y-2 hover:scale-105 hover:shadow-[0_20px_40px_rgba(99,102,241,0.35)]"
+      className="absolute right-6 bottom-6 inline-flex items-center gap-2 bg-black dark:bg-white px-5 py-2.5 text-sm font-semibold text-white dark:text-black cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-indigo-500 dark:hover:bg-indigo-400 hover:-translate-y-2 hover:scale-105 hover:shadow-[0_20px_40px_rgba(99,102,241,0.35)]"
     >
       View Project
       <ArrowUpRight className="h-4 w-4" />
@@ -200,7 +233,7 @@ const ProjectModal = ({ project, onClose }) => {
         className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" 
         onClick={onClose}
       />
-      <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-[2rem] border border-black/5 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.15)] overflow-hidden transform transition-all">
+      <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-[2rem] border border-black/5 dark:border-white/10 bg-white dark:bg-slate-900 shadow-[0_24px_70px_rgba(15,23,42,0.15)] dark:shadow-[0_24px_70px_rgba(0,0,0,0.5)] overflow-hidden transform transition-all">
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-10">
           <div className="flex justify-between items-start mb-6 gap-4">
             <div>
@@ -210,29 +243,29 @@ const ProjectModal = ({ project, onClose }) => {
                 </span>
                 <span className="text-sm text-slate-500">{project.date}</span>
               </div>
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-[-0.05em] leading-[0.95] text-[#13221c]">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-[-0.05em] leading-[0.95] text-[#13221c] dark:text-[#f4f1ea]">
                 {project.title}
               </h3>
             </div>
             <button
               onClick={onClose}
-              className="p-2 -mr-2 rounded-full hover:bg-slate-100 transition-colors cursor-pointer shrink-0 text-slate-500 hover:text-slate-800"
+              className="p-2 -mr-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shrink-0 text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
               aria-label="Close"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
           
-          <p className="text-lg leading-relaxed text-slate-700 mb-8">
+          <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300 mb-8">
             {project.description}
           </p>
 
           {project.techStack && project.techStack.length > 0 && (
             <div className="mb-8">
-              <h4 className="text-xl font-bold mb-3 text-[#13221c]">Tech Stack</h4>
+              <h4 className="text-xl font-bold mb-3 text-[#13221c] dark:text-[#f4f1ea]">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
                 {project.techStack.map(tech => (
-                  <span key={tech} className="px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-sm font-medium text-slate-800">
+                  <span key={tech} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-sm font-medium text-slate-800 dark:text-slate-200">
                     {tech}
                   </span>
                 ))}
@@ -242,30 +275,30 @@ const ProjectModal = ({ project, onClose }) => {
 
           {approach && (
             <div className="mb-6">
-              <h4 className="text-xl font-bold mb-3 text-[#13221c]">Approach</h4>
-              <div className="prose prose-slate max-w-none text-slate-600">
-                <p className="whitespace-pre-wrap">{approach}</p>
+              <h4 className="text-xl font-bold mb-3 text-[#13221c] dark:text-[#f4f1ea]">Approach</h4>
+              <div className="text-slate-600 dark:text-slate-400 leading-relaxed [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:mt-8 [&_h1]:mb-4 [&_h1]:text-[#13221c] dark:[&_h1]:text-[#f4f1ea] [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:text-[#13221c] dark:[&_h2]:text-[#f4f1ea] [&_h3]:text-xl [&_h3]:font-bold [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-[#13221c] dark:[&_h3]:text-[#f4f1ea] [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-1 [&_blockquote]:border-l-4 [&_blockquote]:border-indigo-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:my-4 [&_hr]:my-6 [&_hr]:border-slate-200 dark:[&_hr]:border-slate-700 [&_a]:text-indigo-500 [&_a]:underline hover:[&_a]:text-indigo-600 [&_strong]:font-bold [&_strong]:text-slate-900 dark:[&_strong]:text-slate-100">
+                <ReactMarkdown>{approach}</ReactMarkdown>
               </div>
             </div>
           )}
 
           {implementation && (
             <div className="mb-6">
-              <h4 className="text-xl font-bold mb-3 text-[#13221c]">Implementation</h4>
-              <div className="prose prose-slate max-w-none text-slate-600">
-                <p className="whitespace-pre-wrap">{implementation}</p>
+              <h4 className="text-xl font-bold mb-3 text-[#13221c] dark:text-[#f4f1ea]">Implementation</h4>
+              <div className="text-slate-600 dark:text-slate-400 leading-relaxed [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:mt-8 [&_h1]:mb-4 [&_h1]:text-[#13221c] dark:[&_h1]:text-[#f4f1ea] [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:text-[#13221c] dark:[&_h2]:text-[#f4f1ea] [&_h3]:text-xl [&_h3]:font-bold [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-[#13221c] dark:[&_h3]:text-[#f4f1ea] [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-1 [&_blockquote]:border-l-4 [&_blockquote]:border-indigo-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:my-4 [&_hr]:my-6 [&_hr]:border-slate-200 dark:[&_hr]:border-slate-700 [&_a]:text-indigo-500 [&_a]:underline hover:[&_a]:text-indigo-600 [&_strong]:font-bold [&_strong]:text-slate-900 dark:[&_strong]:text-slate-100">
+                <ReactMarkdown>{implementation}</ReactMarkdown>
               </div>
             </div>
           )}
         </div>
         
-        <div className="p-6 sm:px-10 border-t border-slate-100 bg-slate-50 flex flex-wrap items-center gap-4 shrink-0">
+        <div className="p-6 sm:px-10 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex flex-wrap items-center gap-4 shrink-0">
           {project.homepageUrl && (
             <a
               href={project.homepageUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-indigo-500 hover:shadow-lg hover:-translate-y-0.5"
+              className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-white dark:bg-slate-800 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold text-[#13221c] dark:text-slate-100 shadow-[0_8px_20px_rgba(15,23,42,0.08)] dark:shadow-[0_8px_20px_rgba(0,0,0,0.3)] transition-all duration-200 hover:bg-indigo-500 hover:shadow-lg hover:-translate-y-0.5"
             >
               <Play className="h-4 w-4" fill="currentColor" />
               Live Project
@@ -315,12 +348,12 @@ const Project = () => {
   return (
     <section
       id="projects"
-      className="relative scroll-mt-24 overflow-hidden bg-[#f4f1ea] py-20"
+      className="relative scroll-mt-24 overflow-hidden bg-[#f4f1ea] dark:bg-[#13221c] py-20"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
 
         {/* Grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:68px_68px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:68px_68px]" />
 
         {/* Top Right Golden Rings */}
         <svg
@@ -392,7 +425,7 @@ const Project = () => {
       <div className="w-full mt-10 px-6 sm:px-10 lg:px-20">
         <div className="mb-15 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h3 className="mt-3 text-[clamp(2.5rem,5vw,5.5rem)] font-black uppercase tracking-[-0.07em] leading-[0.9] text-[#13221c]">
+            <h3 className="mt-3 text-[clamp(2.5rem,5vw,5.5rem)] font-black uppercase tracking-[-0.07em] leading-[0.9] text-[#13221c] dark:text-[#f4f1ea]">
               Featured Projects
             </h3>
           </div>
@@ -408,13 +441,11 @@ const Project = () => {
                 text-[#13221c]
                 font-semibold text-sm
                 transition-all duration-300
-                shadow-[8px_8px_18px_rgba(0,0,0,0.12),-8px_-8px_18px_rgba(255,255,255,0.9)]
-                hover:shadow-[0_0_25px_rgba(255,80,80,0.25),8px_8px_18px_rgba(0,0,0,0.12)]
+                hover:bg-indigo-500
                 hover:-translate-y-1
                 before:absolute
-                before:inset-0
                 before:rounded-full
-                before:shadow-[inset_2px_2px_4px_rgba(255,255,255,0.8)]
+                // before:shadow-[inset_2px_2px_4px_rgba(255,255,255,0.8)]
               "
             >
               {/* Glow */}
@@ -431,11 +462,11 @@ const Project = () => {
       {/* Content area — full bleed */}
       <div className="relative mt-8 w-screen" style={{ marginLeft: 'calc(50% - 50vw)' }}>
         {loading ? (
-          <div className="mx-6 rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center text-[#13221c] shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+          <div className="mx-6 rounded-[2rem] border border-black/5 dark:border-white/10 bg-white dark:bg-slate-800 px-6 py-10 text-center text-[#13221c] dark:text-[#f4f1ea] shadow-[0_24px_70px_rgba(15,23,42,0.08)] dark:shadow-[0_24px_70px_rgba(0,0,0,0.3)]">
             Loading pinned projects...
           </div>
         ) : error ? (
-          <div className="mx-6 rounded-[2rem] border border-black/5 bg-white px-6 py-10 text-center text-[#13221c] shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+          <div className="mx-6 rounded-[2rem] border border-black/5 dark:border-white/10 bg-white dark:bg-slate-800 px-6 py-10 text-center text-[#13221c] dark:text-[#f4f1ea] shadow-[0_24px_70px_rgba(15,23,42,0.08)] dark:shadow-[0_24px_70px_rgba(0,0,0,0.3)]">
             {error}
           </div>
         ) : !gridRevealed ? (
@@ -452,7 +483,7 @@ const Project = () => {
               <button
                 type="button"
                 onClick={() => setGridRevealed(false)}
-                className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-2.5 text-sm font-semibold text-[#13221c] shadow-sm transition-colors duration-200 hover:bg-slate-100 cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white dark:bg-slate-800 px-5 py-2.5 text-sm font-semibold text-[#13221c] dark:text-slate-100 shadow-sm transition-colors duration-200 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
               >
                 ← Hide Projects
               </button>
@@ -471,7 +502,7 @@ const Project = () => {
       {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
 
       <div className="w-full flex justify-center mt-6 px-4">
-        <p className="max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5  text-[#13221c] font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em]">
+        <p className="max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5 dark:border-white/10 text-[#13221c] dark:text-[#f4f1ea] font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em]">
           Code. Create. Improve. Repeat.{' '}
         </p>
       </div>

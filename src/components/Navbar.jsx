@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AIChar_2 from '../assets/AIChar_2.png';
-import resumePdf from '../assets/Aayush Barik Resume.pdf.pdf';
+import resumePdf from '../assets/Resume.pdf';
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [active, setActive] = useState('Contact');
   
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,12 +25,33 @@ export default function Navbar() {
     setActive(label);
 
     if (label === 'Resume/CV') {
-      window.open(resumePdf, '_blank', 'noopener,noreferrer');
+      const link = document.createElement("a");
+      link.href = "/Resume/CV.pdf";
+      link.download = "Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    if (label === 'Blogs') {
+      navigate('/blog');
       return;
     }
 
     const targetId = sectionMap[label];
     if (!targetId) return;
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+      return;
+    }
 
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
@@ -36,7 +60,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-3 left-1/2 z-50 transform -translate-x-1/2 w-[min(94%,900px)] max-w-2xl bg-white/95 backdrop-blur rounded-full shadow-sm px-4 py-2 flex items-center border border-gray-300 dark:border-gray/100">
+    <nav className="fixed top-3 left-1/2 z-50 transform -translate-x-1/2 w-[min(94%,900px)] max-w-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur rounded-full shadow-sm px-4 py-2 flex items-center border border-gray-300 dark:border-white/10">
       {/* Avatar with flip effect on hover */}
       <div className="relative w-11 h-11 mr-3 sm:mr-4 shrink-0 cursor-pointer [perspective:600px] group">
         
@@ -67,7 +91,7 @@ export default function Navbar() {
             <button
               onClick={() => handleNavigate(label)}
               className={`cursor-pointer text-sm font-medium transition-colors duration-150 ${
-                active === label ? 'text-gray-800' : 'text-gray-500 hover:text-gray-800'
+                active === label ? 'text-gray-800 dark:text-slate-100' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'
               }`}
             >
               {label}
@@ -89,8 +113,8 @@ export default function Navbar() {
           onClick={() => setActive('Contact')}
           className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold transition-shadow duration-150 ${
             active === 'Contact'
-              ? 'bg-black text-white shadow-md hover:bg-indigo-500 hover:text-white hover:shadow-lg'
-              : 'bg-white text-black hover:bg-black hover:text-white hover:shadow-md'
+              ? 'bg-[#13221c] dark:bg-white text-white dark:text-black shadow-md hover:bg-indigo-500 dark:hover:bg-indigo-400 hover:text-white dark:hover:text-black hover:shadow-lg'
+              : 'bg-white dark:bg-slate-800 text-black dark:text-white hover:bg-black dark:hover:bg-slate-700 hover:text-white dark:hover:text-white hover:shadow-md'
           }`}
         >
           Let's Talk
@@ -102,13 +126,13 @@ export default function Navbar() {
         onClick={() => setMenuOpen((prev) => !prev)}
         aria-label="Toggle navigation menu"
         aria-expanded={menuOpen}
-        className="ml-auto md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-white text-black shadow-sm transition-transform duration-150 active:scale-95 cursor-pointer"
+        className="ml-auto md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 dark:border-white/10 bg-white dark:bg-slate-800 text-black dark:text-white shadow-sm transition-transform duration-150 active:scale-95 cursor-pointer"
       >
         {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
       <div
-        className={`absolute inset-x-2 top-full mt-3 max-w-xl mx-auto md:hidden overflow-hidden rounded-[1.6rem] border border-gray-300 bg-white/95 shadow-sm backdrop-blur transition-all duration-250 ease-out ${
+        className={`absolute inset-x-2 top-full mt-3 max-w-xl mx-auto md:hidden overflow-hidden rounded-[1.6rem] border border-gray-300 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 shadow-sm backdrop-blur transition-all duration-250 ease-out ${
           menuOpen
             ? 'max-h-80 opacity-100 translate-y-0'
             : 'max-h-0 opacity-0 pointer-events-none translate-y-2'
@@ -126,7 +150,7 @@ export default function Navbar() {
               className={`cursor-pointer rounded-full px-4 py-2 text-center text-sm font-medium transition-all duration-300 ease-out transform ${
                 menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
               } ${
-                active === label ? 'text-gray-800 bg-gray-100' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'
+                active === label ? 'text-gray-800 dark:text-slate-100 bg-gray-100 dark:bg-slate-800' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800'
               }`}
             >
               {label}
@@ -139,7 +163,7 @@ export default function Navbar() {
               setMenuOpen(false);
             }}
             style={{ transitionDelay: menuOpen ? `${links.length * 60}ms` : '0ms' }}
-            className={`mt-1 cursor-pointer self-center rounded-full bg-black px-6 py-2 text-sm font-semibold text-white shadow-md transition-all duration-300 ease-out transform ${
+            className={`mt-1 cursor-pointer self-center rounded-full bg-black dark:bg-white px-6 py-2 text-sm font-semibold text-white dark:text-black shadow-md transition-all duration-300 ease-out transform ${
               menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
             }`}
           >

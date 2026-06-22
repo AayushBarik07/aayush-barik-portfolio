@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Hand } from 'lucide-react';
 import profileImage from '../assets/PFP.png';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Download, DownloadCloud, FileDown } from 'lucide-react';
+import React from 'react';
+import resumePdf from '../assets/Resume.pdf';
 
 const Home = () => {
   const [showWave, setShowWave] = useState(true);
@@ -18,15 +20,24 @@ const Home = () => {
     return () => clearTimeout(t);
   }, []);
 
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/Resume/CV.pdf";
+    link.download = "Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <section
-      className="w-full min-h-[calc(100vh-72px)] bg-[#f4f1ea] flex flex-col items-center justify-center overflow-hidden px-6 py-8 sm:px-10 md:px-14 lg:px-20 lg:py-10 mt-16 scroll-mt-24"
+      className="w-full min-h-[calc(100vh-72px)] bg-[#f4f1ea] dark:bg-[#13221c] flex flex-col items-center justify-center overflow-hidden px-6 py-8 sm:px-10 md:px-14 lg:px-20 lg:py-10 mt-16 scroll-mt-24"
       id="home"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
 
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:70px_70px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:70px_70px]" />
 
         <svg
           className="absolute right-0 top-0 w-[900px] h-[700px] opacity-50"
@@ -156,10 +167,10 @@ const Home = () => {
           className={`fade-left relative z-20 mx-2 sm:mx-4 md:-mr-8 lg:-mr-10 md:-mt-5 lg:-mt-13 flex flex-col items-start justify-center ${mounted ? 'in' : ''}`}
           style={{ transitionDelay: '0.05s' }}
         >
-          <span className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-[0.08em] uppercase text-[#13221c]">
+          <span className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-[0.08em] uppercase text-[#13221c] dark:text-[#f4f1ea]">
             I&apos;m
           </span>
-          <h1 className="text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.04em] leading-none text-[#13221c]">
+          <h1 className="text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.04em] leading-none text-[#13221c] dark:text-[#f4f1ea]">
             WEBSITE
           </h1>
         </div>
@@ -228,7 +239,7 @@ const Home = () => {
 
         {/* ── RIGHT — "DEVELOPER" ── */}
         <h1
-          className={`fade-right relative z-20 mx-2 sm:mx-4 md:-ml-8 lg:-ml-10 md:-mt-1 lg:-mt-2 text-center text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.02em] leading-none text-[#13221c] bg-linear-to-r from-[#13221c] via-[#1d322a] to-[#73807b] bg-clip-text text-transparent ${mounted ? 'in' : ''}`}
+          className={`fade-right relative z-20 mx-2 sm:mx-4 md:-ml-8 lg:-ml-10 md:-mt-1 lg:-mt-2 text-center text-[clamp(2.2rem,7vw,8.8rem)] font-black uppercase tracking-[-0.02em] leading-none text-[#13221c] bg-linear-to-r from-[#13221c] via-[#1d322a] to-[#73807b] dark:from-[#f4f1ea] dark:via-[#e2e8f0] dark:to-[#cbd5e1] bg-clip-text text-transparent ${mounted ? 'in' : ''}`}
           style={{ transitionDelay: '0.05s' }}
         >
           DEVELOPER
@@ -238,19 +249,49 @@ const Home = () => {
       {/* ── tagline ── */}
       <div className="w-full flex justify-center mt-6 px-4">
         <p
-          className={`fade-up max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5 text-black font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em] ${mounted ? 'in' : ''}`}
+          className={`fade-up max-w-3xl text-center mt-7 px-5 py-3 rounded-full border border-black/5 dark:border-white/10 text-black dark:text-white font-bold text-sm sm:text-base md:text-lg leading-relaxed tracking-[-0.02em] ${mounted ? 'in' : ''}`}
           style={{ transitionDelay: '0.32s' }}
         >
           Building modern web experiences with{' '}
-          <span className="bg-linear-to-r from-[#13221c] via-[#1d322a] to-[#73807b] bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-[#13221c] via-[#1d322a] to-[#73807b] dark:from-[#f4f1ea] dark:via-[#e2e8f0] dark:to-[#cbd5e1] bg-clip-text text-transparent">
             full-stack and AI technologies
           </span>
           .
         </p>
       </div>
-
+  
       {/* ── CTA button ── */}
-      <div className="w-full flex justify-center mt-10">
+      <div className="w-full flex justify-center gap-4 mt-10">
+        {/* Download Resume */}
+        <button
+          type="button"
+          onClick={handleDownload}
+          className={`group relative overflow-hidden inline-flex items-center gap-3 px-10 py-4 rounded-[28px] bg-linear-to-b
+            bg-gray-100
+            text-black 
+            font-medium
+            shadow-[0_12px_24px_rgba(0,0,0,0.35),inset_0_2px_2px_rgba(255,255,255,0.12),inset_0_-2px_2px_rgba(0,0,0,0.25)]
+            transition-all duration-300 hover:-translate-y-1
+            hover:bg-white
+            hover:bg-none
+            hover:text-black
+            hover:shadow-[0_18px_35px_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.15)]
+            cursor-pointer
+            ${mounted ? "in" : ""}
+          `}
+          style={{ transitionDelay: "0.1s" }}
+        >
+          <span className="absolute left-3 right-3 top-1 h-[40%] rounded-full bg-white/10 blur-md" />
+          <span className="absolute right-4 top-2 h-[70%] w-5 rounded-full bg-white/10 blur-sm" />
+          <span className="absolute inset-0 rounded-[28px] bg-emerald-300/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
+
+          <span className="relative z-10">Download Resume</span>
+
+          <Download className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
+        </button>
+
+
+        {/* Connect */}
         <a
           href="#contact"
           className={`group relative overflow-hidden inline-flex items-center gap-3 px-10 py-4 rounded-[28px] bg-linear-to-b
@@ -262,17 +303,17 @@ const Home = () => {
 
             shadow-[0_12px_24px_rgba(0,0,0,0.35),inset_0_2px_2px_rgba(255,255,255,0.12),inset_0_-2px_2px_rgba(0,0,0,0.25)]
 
-            transition-all duration-300 hover:-translate-y-1
-
-            hover:bg-white
-            hover:bg-none
-            hover:text-black
-
-            hover:shadow-[0_18px_35px_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.15)]
+            hover:from-indigo-500
+            hover:via-indigo-500
+            hover:to-indigo-600
+            hover:text-white 
+            hover:shadow-[0_15px_30px_rgba(99,102,241,0.4),inset_0_2px_2px_rgba(255,255,255,0.2)]
+            transition-all duration-300 
+            hover:-translate-y-1
 
             ${mounted ? "in" : ""}
           `}
-          style={{ transitionDelay: "0.1s" }}
+          // style={{ transitionDelay: "0.1s" }}
         >
           {/* Top glossy layer */}
           <span className="absolute left-3 right-3 top-1 h-[40%] rounded-full bg-white/10 blur-md" />

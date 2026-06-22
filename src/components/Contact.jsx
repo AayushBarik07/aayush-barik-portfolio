@@ -13,7 +13,7 @@ import {
 import AIChar_2_removebg from '../assets/AIChar_2-removebg.png';
 
 const thinBorder = 'border border-white/30';
-const glass = 'bg-white/20 backdrop-blur-xl backdrop-saturate-150';
+const glass = 'bg-white/20 dark:bg-slate-900/40 backdrop-blur-xl backdrop-saturate-150';
 
 const socials = [
   {
@@ -41,7 +41,7 @@ const socials = [
 
 const info = [
   { icon: FaLocationDot, label: 'Location', value: 'India' },
-  { icon: FaEnvelope, label: 'Email', value: 'superbsup45@example.com' },
+  { icon: FaEnvelope, label: 'Email', value: 'superbsup45@gmail.com' },
 ];
 
 const container = {
@@ -88,11 +88,11 @@ const Contact = () => {
     // ✅ FIX 1: Removed h-screen and overflow-hidden — let content breathe
     <section
       id="contact"
-      className="relative min-h-screen bg-[#f4f1ea] py-16 pb-24"
+      className="relative min-h-screen bg-[#f4f1ea] dark:bg-[#13221c] py-16 pb-24"
     >
       {/* ── Background decorations ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:80px_80px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:80px_80px]" />
         <svg className="absolute right-0 top-0 h-full w-full opacity-50" viewBox="0 0 1200 800" fill="none">
           <path d="M650 500C780 450 760 350 900 300C1040 250 1080 150 1200 120" stroke="#D6B05E" strokeWidth="2" />
           <path d="M620 550C760 500 780 390 930 340C1080 290 1120 170 1200 150" stroke="#D6B05E" strokeWidth="1.5" />
@@ -116,7 +116,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-none text-[#13221c]"
+            className="text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-none text-[#13221c] dark:text-[#f4f1ea]"
           >
             GET IN TOUCH
           </motion.h1>
@@ -124,7 +124,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
-            className="max-w-xl mx-auto mt-4 text-slate-500 text-base"
+            className="max-w-xl mx-auto mt-4 text-slate-500 dark:text-slate-400 text-base"
           >
             Got a project in mind, want to collaborate, or just want to say hello?
             I'm currently open to work and would love to hear from you.
@@ -157,7 +157,7 @@ const Contact = () => {
 
               {/* Name + title */}
               <div className="relative px-5 pt-3 pb-4 text-center">
-                <h3 className="text-3xl font-black text-[#13221c]">Aayush Barik</h3>
+                <h3 className="text-3xl font-black text-[#13221c] dark:text-[#f4f1ea]">Aayush Barik</h3>
                 <p className="mt-2 uppercase tracking-[4px] text-sm text-slate-400">
                   WEB DEVELOPER <span className="mx-2">•</span>
                   <span className="text-blue-500">OPEN TO WORK</span>
@@ -176,18 +176,18 @@ const Contact = () => {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     whileHover={{ y: -4 }}
                     // ✅ FIX: Email card spans full width so the value isn't truncated
-                    className={`group rounded-2xl border border-black/5 bg-white/30 backdrop-blur-sm px-4 py-4 transition-all duration-300 hover:bg-white/50 hover:shadow-lg hover:shadow-black/5 ${
+                    className={`group rounded-2xl border border-black/5 bg-white/30 dark:bg-slate-800/40 backdrop-blur-sm px-4 py-4 transition-all duration-300 hover:bg-white/50 dark:hover:bg-slate-700/50 hover:shadow-lg hover:shadow-black/5 ${
                       label === 'Email' ? 'col-span-2' : ''
                     }`}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#D6B05E]/40 bg-white/40 text-[#D6B05E] transition-all duration-300 group-hover:scale-110">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#D6B05E]/40 bg-white/40 dark:bg-slate-700/60 text-[#D6B05E] transition-all duration-300 group-hover:scale-110">
                         <Icon className="h-4 w-4" />
                       </div>
                       <div className="min-w-0">
                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">{label}</p>
                         {/* ✅ FIX: Removed truncate, allow text to wrap naturally */}
-                        <p className="mt-0.5 text-sm font-semibold text-[#1E2A44] break-all">{value}</p>
+                        <p className="mt-0.5 text-sm font-semibold text-[#1E2A44] dark:text-slate-100 break-all">{value}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -216,11 +216,11 @@ const Contact = () => {
                         transition={{ duration: 0.4, delay: index * 0.08 }}
                         whileHover={{ x: 8, scale: 1.01 }}
                         whileTap={{ scale: 0.98 }}
-                        className="group flex items-center gap-4 rounded-2xl border border-white/40 bg-white/30 px-4 py-3 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 hover:shadow-lg hover:shadow-black/5"
+                        className="group flex items-center gap-4 rounded-2xl border border-white/40 bg-white/30 dark:bg-slate-800/40 px-4 py-3 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 dark:hover:bg-slate-700/50 hover:shadow-lg hover:shadow-black/5"
                       >
                         <span className={`h-2.5 w-2.5 rounded-full ${s.dot} shrink-0`} />
-                        <Icon className="h-5 w-5 text-slate-700 shrink-0" />
-                        <span className="flex-1 text-[15px] font-semibold text-slate-800">{s.name}</span>
+                        <Icon className="h-5 w-5 text-slate-700 dark:text-slate-300 shrink-0" />
+                        <span className="flex-1 text-[15px] font-semibold text-slate-800 dark:text-slate-200">{s.name}</span>
                         <span className="hidden sm:block text-sm text-slate-400">{s.handle}</span>
                         <FaArrowRight className="h-3.5 w-3.5 text-slate-300" />
                       </motion.a>
@@ -236,7 +236,7 @@ const Contact = () => {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="relative overflow-hidden rounded-[40px] border border-black/5 bg-white/25 backdrop-blur-md p-8 shadow-xl shadow-black/5"
+            className="relative overflow-hidden rounded-[40px] border border-black/5 dark:border-white/10 bg-white/25 dark:bg-slate-900/40 backdrop-blur-md p-8 shadow-xl shadow-black/5"
           >
             {/* Gold Spiral Decoration */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -251,7 +251,7 @@ const Contact = () => {
               <div className="mb-8">
                 <p className="text-[#D6B05E] uppercase tracking-[4px] text-xb text-4xl font-bold mb-3">LET'S CONNECT</p>
                 {/* <h2 className="text-4xl font-black text-[#1E2A44] leading-none">LET'S CONNECT</h2> */}
-                <p className="mt-4 text-slate-500 max-w-lg">
+                <p className="mt-4 text-slate-500 dark:text-slate-400 max-w-lg">
                   Have an idea, project, opportunity, or just want to say hello? I'd love to hear from you.
                 </p>
               </div>
@@ -274,8 +274,8 @@ const Contact = () => {
                       <FaPaperPlane className="h-7 w-7" />
                     </motion.div>
                     <div>
-                      <p className="text-2xl font-black text-[#1E2A44]">Message Sent!</p>
-                      <p className="mt-2 text-slate-500">Thank you for reaching out. I'll get back to you soon.</p>
+                      <p className="text-2xl font-black text-[#1E2A44] dark:text-[#f4f1ea]">Message Sent!</p>
+                      <p className="mt-2 text-slate-500 dark:text-slate-400">Thank you for reaching out. I'll get back to you soon.</p>
                     </div>
                     <button
                       onClick={() => { setSent(false); setForm({ name: '', email: '', message: '' }); }}
@@ -303,7 +303,7 @@ const Contact = () => {
                         <input
                           required name="name" type="text" value={form.name} onChange={handleChange}
                           placeholder="Aayush Barik"
-                          className="w-full rounded-2xl border border-black/5 bg-white/50 px-5 py-4 text-sm font-medium text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-[#D6B05E] focus:bg-white"
+                          className="w-full rounded-2xl border border-black/5 dark:border-white/10 bg-white/50 dark:bg-slate-800/50 px-5 py-4 text-sm font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-[#D6B05E] focus:bg-white dark:focus:bg-slate-800"
                         />
                       </div>
                       <div className="space-y-2">
@@ -311,7 +311,7 @@ const Contact = () => {
                         <input
                           required name="email" type="email" value={form.email} onChange={handleChange}
                           placeholder="you@example.com"
-                          className="w-full rounded-2xl border border-black/5 bg-white/50 px-5 py-4 text-sm font-medium text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-[#D6B05E] focus:bg-white"
+                          className="w-full rounded-2xl border border-black/5 dark:border-white/10 bg-white/50 dark:bg-slate-800/50 px-5 py-4 text-sm font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-[#D6B05E] focus:bg-white dark:focus:bg-slate-800"
                         />
                       </div>
                     </div>
@@ -321,7 +321,7 @@ const Contact = () => {
                       <textarea
                         required name="message" rows={7} value={form.message} onChange={handleChange}
                         placeholder="Tell me about your project, idea, or just say hello..."
-                        className="w-full resize-none rounded-2xl border border-black/5 bg-white/50 px-5 py-4 text-sm font-medium text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-[#D6B05E] focus:bg-white"
+                        className="w-full resize-none rounded-2xl border border-black/5 dark:border-white/10 bg-white/50 dark:bg-slate-800/50 px-5 py-4 text-sm font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none transition-all duration-300 focus:border-[#D6B05E] focus:bg-white dark:focus:bg-slate-800"
                       />
                     </div>
 
@@ -338,8 +338,13 @@ const Contact = () => {
 
                           shadow-[0_12px_24px_rgba(0,0,0,0.35),inset_0_2px_2px_rgba(255,255,255,0.12),inset_0_-2px_2px_rgba(0,0,0,0.25)]
 
-                          hover:shadow-[0_18px_35px_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.15)]
-                          disabled:opacity-60
+                          hover:from-indigo-500
+                          hover:via-indigo-500
+                          hover:to-indigo-600
+                          hover:text-white 
+                          hover:shadow-[0_15px_30px_rgba(99,102,241,0.4),inset_0_2px_2px_rgba(255,255,255,0.2)]
+                          transition-all duration-300 
+                          hover:-translate-y-1
                         ">
                         {/* Top glossy highlight */}
                         <span className="absolute left-2 right-2 top-1 h-[35%] rounded-full bg-white/10 blur-md" />

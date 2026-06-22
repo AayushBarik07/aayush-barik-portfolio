@@ -2,11 +2,11 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import {
   FaArrowRight, FaBriefcase, FaCode, FaLinkedin, FaGithub,
-  FaLaptopCode, FaXTwitter, FaRocket, FaUsers
+  FaLaptopCode, FaXTwitter, FaRocket, FaUsers,
 } from 'react-icons/fa6';
 import {
   SiExpress, SiMongodb, SiNextdotjs, SiNodedotjs, SiOpenai,
-  SiPostgresql, SiReact, SiTailwindcss, SiTypescript,
+  SiPostgresql, SiReact, SiTailwindcss, SiTypescript, SiGraphql, SiSupabase, SiJavascript, SiPython,
 } from 'react-icons/si';
 import AIChar from '../assets/AIChar.png';
 
@@ -39,6 +39,7 @@ const stackGroups = [
       { name: 'Next.js', icon: SiNextdotjs },
       { name: 'Tailwind CSS', icon: SiTailwindcss },
       { name: 'TypeScript', icon: SiTypescript },
+      { name: 'JavaScript', icon: SiJavascript },
     ],
   },
   {
@@ -48,6 +49,8 @@ const stackGroups = [
       { name: 'Node.js', icon: SiNodedotjs },
       { name: 'Express.js', icon: SiExpress },
       { name: 'REST APIs', icon: FaCode },
+      { name: 'GraphQL', icon: SiGraphql },
+      { name: 'Python', icon: SiPython },
     ],
   },
   {
@@ -56,6 +59,7 @@ const stackGroups = [
     items: [
       { name: 'MongoDB', icon: SiMongodb },
       { name: 'PostgreSQL', icon: SiPostgresql },
+      { name: 'Supabase', icon: SiSupabase },
     ],
   },
   {
@@ -188,22 +192,22 @@ function ExperienceCard({ item, index, total }) {
       {!isLast && (
         <span className="absolute left-[0.58rem] top-5 h-full w-px bg-gradient-to-b from-cyan-300/60 via-gray-200/40 to-transparent" />
       )}
-      <span className="absolute left-0 top-4 flex h-5 w-5 items-center justify-center rounded-full border border-[#D6B05E] bg-white shadow-sm">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#13221c]/60" />
+      <span className="absolute left-0 top-4 flex h-5 w-5 items-center justify-center rounded-full border border-[#D6B05E] bg-white dark:bg-slate-800 shadow-sm">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#13221c]/60 dark:bg-[#f4f1ea]/60" />
       </span>
       <motion.div
         whileHover={{ scale: 1.04, x: 4 }}
         transition={{ type: 'spring', stiffness: 280, damping: 22 }}
-        className={`w-full rounded-2xl ${thinBorder} bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md hover:border-[#D6B05E]/70`}
+        className={`w-full rounded-2xl ${thinBorder} bg-white dark:bg-slate-800 p-4 shadow-sm transition-shadow duration-300 hover:shadow-md hover:border-[#D6B05E]/70`}
       >
         <div className="flex items-start gap-3">
-          <div className="rounded-xl border border-[#D6B05E] bg-gray-50 p-2 text-[#13221c] shrink-0">
+          <div className="rounded-xl border border-[#D6B05E] bg-gray-50 dark:bg-slate-700/50 p-2 text-[#13221c] dark:text-[#f4f1ea] shrink-0">
             <Icon className="h-4 w-4" />
           </div>
           <div className="flex-1 space-y-1.5 min-w-0">
             <div className="flex flex-wrap items-start justify-between gap-1.5">
-              <h4 className="text-sm font-bold text-slate-900 leading-tight">{item.role}</h4>
-              <span className="whitespace-nowrap rounded-full border border-[#D6B05E]/60 bg-[#D6B05E]/10 px-2.5 py-0.5 text-[10px] font-semibold text-[#13221c] font-mono shrink-0">
+              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">{item.role}</h4>
+              <span className="whitespace-nowrap rounded-full border border-[#D6B05E]/60 bg-[#D6B05E]/10 px-2.5 py-0.5 text-[10px] font-semibold text-[#13221c] dark:text-[#f4f1ea] font-mono shrink-0">
                 {item.year}
               </span>
             </div>
@@ -224,7 +228,7 @@ function GridBackground() {
       <div className="absolute left-[-4rem] bottom-[10rem] h-[16rem] w-[16rem] rounded-full bg-cyan-200/10 blur-3xl" />
       {/* Fine grid */}
       <div
-        className="absolute inset-0 opacity-[0.4]"
+        className="absolute inset-0 opacity-[0.4] dark:invert dark:opacity-[0.1]"
         style={{
           backgroundImage:
             'linear-gradient(to right,rgba(17,24,39,0.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(17,24,39,0.04) 1px,transparent 1px)',
@@ -261,12 +265,12 @@ const AboutMe = () => {
 
   return (
     <section
-      className="relative isolate overflow-hidden bg-[#f4f1ea] text-slate-900 scroll-mt-24"
+      className="relative isolate overflow-hidden bg-[#f4f1ea] dark:bg-[#13221c] text-slate-900 dark:text-slate-100 scroll-mt-24"
       id="about"
     >
       {/* Background pattern and accents */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:80px_80px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:80px_80px]" />
         <svg className="absolute right-0 top-0 h-full w-full opacity-50" viewBox="0 0 1200 800" fill="none">
           <path d="M650 500C780 450 760 350 900 300C1040 250 1080 150 1200 120" stroke="#D6B05E" strokeWidth="2" />
           <path d="M620 550C760 500 780 390 930 340C1080 290 1120 170 1200 150" stroke="#D6B05E" strokeWidth="1.5" />
@@ -288,7 +292,7 @@ const AboutMe = () => {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center text-[clamp(3rem,9vw,7.5rem)] font-black uppercase tracking-[-0.06em] leading-none bg-gradient-to-r from-[#13221c] via-[#1d322a] to-[#73807b] bg-clip-text text-transparent"
+            className="text-center text-[clamp(3rem,9vw,7.5rem)] font-black uppercase tracking-[-0.06em] leading-none bg-gradient-to-r from-[#13221c] via-[#1d322a] to-[#73807b] dark:from-[#f4f1ea] dark:via-[#e2e8f0] dark:to-[#cbd5e1] bg-clip-text text-transparent"
           >
             ABOUT ME
           </motion.h1>
@@ -311,28 +315,28 @@ const AboutMe = () => {
             >
               {/* Section header */}
               <motion.div variants={itemVariants} className="flex items-center justify-between px-1">
-                <h2 className="text-xl font-black tracking-tight text-[#13221c]">My Stack</h2>
+                <h2 className="text-xl font-black tracking-tight text-[#13221c] dark:text-[#f4f1ea]">My Stack</h2>
               </motion.div>
 
               {stackGroups.map((group) => {
                 const GroupIcon = group.icon;
-                let colorClasses = 'border-cyan-300 text-cyan-700';
-                if (group.title === 'Backend') colorClasses = 'border-emerald-300 text-emerald-700';
-                if (group.title === 'Database') colorClasses = 'border-amber-400 text-amber-800';
-                if (group.title === 'AI & Tools') colorClasses = 'border-fuchsia-400 text-fuchsia-700';
+                let colorClasses = 'border-cyan-300 text-cyan-700 dark:text-cyan-400';
+                if (group.title === 'Backend') colorClasses = 'border-emerald-300 text-emerald-700 dark:text-emerald-400';
+                if (group.title === 'Database') colorClasses = 'border-amber-400 text-amber-800 dark:text-amber-400';
+                if (group.title === 'AI & Tools') colorClasses = 'border-fuchsia-400 text-fuchsia-700 dark:text-fuchsia-400';
 
                 return (
                   <motion.div
                     key={group.title}
                     variants={itemVariants}
                     whileHover={{ y: -2 }}
-                    className={`rounded-2xl ${thinBorder} bg-gradient-to-br ${group.accent} p-4 shadow-sm transition-shadow duration-300 hover:shadow-md`}
+                    className={`rounded-2xl ${thinBorder} bg-gradient-to-br ${group.accent} dark:bg-none dark:bg-slate-800/40 p-4 shadow-sm transition-shadow duration-300 hover:shadow-md`}
                   >
                     <div className="mb-3 flex items-center gap-2.5">
-                      <div className="rounded-xl border border-white/50 bg-white/80 p-1.5 text-[#13221c] shadow-sm">
+                      <div className="rounded-xl border border-white/50 dark:border-white/10 bg-white/80 dark:bg-black/20 p-1.5 text-[#13221c] dark:text-[#f4f1ea] shadow-sm">
                         <GroupIcon className="h-4 w-4" />
                       </div>
-                      <h3 className="text-sm font-bold text-[#13221c]">{group.title}</h3>
+                      <h3 className="text-sm font-bold text-[#13221c] dark:text-[#f4f1ea]">{group.title}</h3>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {group.items.map((item) => (
@@ -357,10 +361,10 @@ const AboutMe = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.15 }}
-                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#D6B05E]/60 bg-white/70 px-4 py-1.5 shadow-sm"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#D6B05E]/60 bg-white/70 dark:bg-slate-800/70 px-4 py-1.5 shadow-sm"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-[#D6B05E] animate-pulse" />
-                  <span className="text-xs font-bold uppercase tracking-[0.22em] text-slate-600 font-mono">
+                  <span className="text-xs font-bold uppercase tracking-[0.22em] text-slate-600 dark:text-slate-300 font-mono">
                     Web Developer
                   </span>
                 </motion.div>
@@ -370,7 +374,7 @@ const AboutMe = () => {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="mb-5 text-[clamp(3rem,7.5vw,6rem)] leading-none font-black tracking-tight text-[#13221c]"
+                  className="mb-5 text-[clamp(3rem,7.5vw,6rem)] leading-none font-black tracking-tight text-[#13221c] dark:text-[#f4f1ea]"
                 >
                   Aayush Barik
                 </motion.h1>
@@ -409,12 +413,12 @@ const AboutMe = () => {
                       transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
                       className="absolute top-[-3%] right-[18%] z-10"
                     >
-                      <div className="relative rounded-2xl bg-white border border-gray-200/60 shadow-sm px-3 py-1.5 sm:px-4 sm:py-2">
-                        <span className="text-[0.68rem] sm:text-xs font-bold uppercase tracking-wide text-[#13221c] font-mono whitespace-nowrap">
+                      <div className="relative rounded-2xl bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 shadow-sm px-3 py-1.5 sm:px-4 sm:py-2">
+                        <span className="text-[0.68rem] sm:text-xs font-bold uppercase tracking-wide text-[#13221c] dark:text-[#f4f1ea] font-mono whitespace-nowrap">
                           Let me introduce myself
                         </span>
                         {/* Tail points down toward the head */}
-                        <span className="absolute -bottom-1.5 left-1/3 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-gray-200/60 bg-white" />
+                        <span className="absolute -bottom-1.5 left-1/3 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-gray-200/60 dark:border-slate-700 bg-white dark:bg-slate-800" />
                       </div>
                     </motion.div>
 
@@ -444,10 +448,10 @@ const AboutMe = () => {
                     { label: 'DSA Solved', value: 300, suffix: '+' },
                   ].map(({ label, value, suffix }) => (
                     <div key={label} className="flex flex-col items-center gap-0.5 py-2">
-                      <span className="text-xl font-black text-slate-900 tabular-nums">
+                      <span className="text-xl font-black text-slate-900 dark:text-slate-100 tabular-nums">
                         <CountUp end={value} suffix={suffix} />
                       </span>
-                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide font-mono">{label}</span>
+                      <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide font-mono">{label}</span>
                     </div>
                   ))}
                 </motion.div>
@@ -466,7 +470,7 @@ const AboutMe = () => {
               transition={{ duration: 0.4 }}
             >
               <div className="mb-3 flex items-center justify-between px-1">
-                <h2 className="text-xl font-black tracking-tight text-[#13221c]">My Experience</h2>
+                <h2 className="text-xl font-black tracking-tight text-[#13221c] dark:text-[#f4f1ea]">My Experience</h2>
               </div>
               <div className="space-y-3">
                 {experiences.map((exp, i) => (
@@ -483,7 +487,7 @@ const AboutMe = () => {
               transition={{ duration: 0.5, delay: 0.15 }}
             >
               <div className="mb-3 flex items-center justify-between px-1">
-                <h2 className="text-xl font-black tracking-tight text-[#13221c]">Find Me On</h2>
+                <h2 className="text-xl font-black tracking-tight text-[#13221c] dark:text-[#f4f1ea]">Find Me On</h2>
               </div>
               <div className="space-y-2.5">
                 {socials.map((social, i) => {
@@ -499,14 +503,14 @@ const AboutMe = () => {
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: i * 0.09 }}
                       whileHover={{ x: 4, scale: 1.02 }}
-                      className={`flex items-center gap-3 rounded-2xl ${thinBorder} bg-white p-4 shadow-sm transition-all duration-300 hover:border-[#D6B05E]/70 hover:shadow-md`}
+                      className={`flex items-center gap-3 rounded-2xl ${thinBorder} bg-white dark:bg-slate-800 p-4 shadow-sm transition-all duration-300 hover:border-[#D6B05E]/70 hover:shadow-md`}
                     >
                       <div className={`rounded-xl border ${social.border} ${social.bg} p-2 ${social.color} shrink-0`}>
                         <SocialIcon className="h-4 w-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-[#13221c]">{social.name}</p>
-                        <p className="text-xs text-[#13221c] font-mono">{social.handle}</p>
+                        <p className="text-sm font-bold text-[#13221c] dark:text-[#f4f1ea]">{social.name}</p>
+                        <p className="text-xs text-[#13221c] dark:text-slate-400 font-mono">{social.handle}</p>
                       </div>
                       <motion.span
                         whileHover={{ x: 3 }}
