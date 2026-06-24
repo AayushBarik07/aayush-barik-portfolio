@@ -26,7 +26,7 @@ export default function Navbar() {
 
     if (label === 'Resume/CV') {
       const link = document.createElement("a");
-      link.href = "/Resume/CV.pdf";
+      link.href = resumePdf;
       link.download = "Resume.pdf";
       document.body.appendChild(link);
       link.click();

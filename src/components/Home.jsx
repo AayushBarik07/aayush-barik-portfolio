@@ -22,7 +22,7 @@ const Home = () => {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/Resume/CV.pdf";
+    link.href = resumePdf;
     link.download = "Resume.pdf";
     document.body.appendChild(link);
     link.click();
